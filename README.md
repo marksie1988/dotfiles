@@ -30,3 +30,5 @@
 - [peco](https://github.com/peco/peco) - Interactive filtering
 
 ## How to use
+
+run setup.sh
