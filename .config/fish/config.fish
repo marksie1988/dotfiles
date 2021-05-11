@@ -61,3 +61,5 @@ set LOCAL_CONFIG (dirname (status --current-filename))/config-local.fish
 if test -f $LOCAL_CONFIG
   source $LOCAL_CONFIG
 end
+
+source (dirname (status --current-filename))/shellder.fish
