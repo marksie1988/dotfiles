@@ -31,12 +31,11 @@ set -g GOPATH $HOME/go
 set -gx PATH $GOPATH/bin $PATH
 
 # Get the commit for the latest release.
-set -l hash (command git --git-dir "~/dotfiles-new/.git" --work-tree "$OMF_PATH" rev-list --tags='v*' --max-count=1 2> /dev/null)
+set -l hash (command git --git-dir "~/dotfiles-new/.git" --work-tree "~/dotfiles-new" rev-list --tags='v*' --max-count=1 2> /dev/null)
   # Get the release tag.
-  and set -l tag (command git --git-dir "~/dotfiles-new/.git" --work-tree "$OMF_PATH" describe --tags $hash)
+  and set -l tag (command git --git-dir "~/dotfiles-new/.git" --work-tree "~/dotfiles-new" describe --tags $hash)
   # Checkout the release.
   and command git --git-dir "~/dotfiles-new/.git" --work-tree "~/dotfiles-new" checkout --quiet tags/$tag
-  or report error "Error getting latest version!"
 
 
 # NVM
