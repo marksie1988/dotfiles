@@ -58,12 +58,6 @@ echo
 fisher install jethrokuan/z
 echo
 
-mkdir ~/old-dotfiles
-cp -rf ~/.vimrc ~/old-dotfiles/.vimrc.old
-cp -rf ~/.config/fish ~/old-dotfiles/.config/fish.old
-cp -rf ~/.tmux.conf ~/old-dotfiles/.tmux.conf.old
-cp -rf ~/.gitconfig ~/old-dotfiles/.gitconfig.old
-
 cp -rf `ls -A ~/dotfiles-new/.* | grep -v ".git"` ~/
 
 echo
