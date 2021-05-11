@@ -1,4 +1,4 @@
-installs() {
+install() {
     echo -n "Checking required apps installed"
 
     if [ -x "$(command -v apt-get)" ]; then
@@ -20,7 +20,7 @@ installs() {
 check_for_software() {
 	echo "Checking to see if $1 is installed"
 	if ! [ -x "$(command -v $1)" ]; then
-		prompt_install $1
+		install $1
 	else
 		echo "$1 is installed."
 	fi
@@ -64,7 +64,7 @@ mv ~/.config/fish ~/.config/fish.old
 mv ~/.tmux.conf ~/.tmux.conf.old
 mv ~/.gitconfig ~/.gitconfig.old
 
-printf "source '$HOME/dotfiles/.config/fish/fish_manager.sh'" > ~/.config/fish/config.fish
+printf "source '$HOME/dotfiles/.config/fish/config.fish'" > ~/.config/fish/config.fish
 printf "so $HOME/dotfiles/.vimrc" > ~/.vimrc
 printf "source-file $HOME/dotfiles/.tmux.conf" > ~/.tmux.conf
 
