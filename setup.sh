@@ -58,15 +58,13 @@ echo
 fisher install jethrokuan/z
 echo
 
+mkdir old-dotfiles
+cp -rf ~/.vimrc ~/old-dotfiles/.vimrc.old
+cp -rf ~/.config/fish ~/old-dotfiles/.config/fish.old
+cp -rf ~/.tmux.conf ~/old-dotfiles/.tmux.conf.old
+cp -rf ~/.gitconfig ~/old-dotfiles/.gitconfig.old
 
-mv ~/.vimrc ~/.vimrc.old
-mv ~/.config/fish ~/.config/fish.old
-mv ~/.tmux.conf ~/.tmux.conf.old
-mv ~/.gitconfig ~/.gitconfig.old
-
-printf "source '$HOME/dotfiles/.config/fish/config.fish'" > ~/.config/fish/config.fish
-printf "so $HOME/dotfiles/.vimrc" > ~/.vimrc
-printf "source-file $HOME/dotfiles/.tmux.conf" > ~/.tmux.conf
+cp -rf `ls -A ~/dotfiles-new/.* | grep -v ".git"` ~/
 
 echo
 echo "Please log out and log back in for default shell to be initialized."
