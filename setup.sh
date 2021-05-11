@@ -1,3 +1,5 @@
+#!/bin/bash
+
 install() {
     echo -n "Checking required apps installed"
 
