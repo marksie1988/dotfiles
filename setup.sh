@@ -58,7 +58,7 @@ echo
 fisher install jethrokuan/z
 echo
 
-cp -rf `ls -A ~/dotfiles-new/.* | grep -v ".git"` ~/
+cp -rf `ls -A ~/dotfiles-new/ | grep -v ".git"` ~/
 
 echo
 echo "Please log out and log back in for default shell to be initialized."
