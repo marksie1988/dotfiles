@@ -35,7 +35,9 @@ Install the NerdFonts on your local machine
 
 ```
 sudo apt install fish neovim exa peco git curl
-cp -rf `ls -A ~/dotfiles-new/ | grep -v ".git"` ~/
+git clone https://github.com/marksie1988/dotfiles-new.git
+cd  ~/dotfiles-new/
+cp -rf `ls -A | grep -v ".git"` ~/
 chsh -s $(which fish)
 fish
 curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
