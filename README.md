@@ -31,4 +31,18 @@
 
 ## How to use
 
-run setup.sh
+Install the NerdFonts on your local machine
+
+```
+sudo apt install fish neovim exa peco git curl
+git clone https://github.com/marksie1988/dotfiles-new.git
+cd  ~/dotfiles-new/
+cp -rf ~\dotfiles-new\`ls -A | grep -v ".git"` ~/
+chsh -s $(which fish)
+fish
+curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+fisher install jethrokuan/z
+curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+sh ./installer.sh ~/.cache/dein
+```
+
