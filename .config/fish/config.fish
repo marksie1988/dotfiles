@@ -33,16 +33,16 @@ set -gx PATH $GOPATH/bin $PATH
 
 # Get the commit for the latest release.
 echo "Check for new dotfiles release"
-set -l cur (command git -C ~/dotfiles-new/.git describe --tags)
-set -l hash (command git -C ~/dotfiles-new/.git --work-tree=../ rev-list --tags='v*' --max-count=1 2> /dev/null)
-set -l latest (command git -C ~/dotfiles-new/.git --work-tree=../ describe --tags $hash)
+set -l cur (command git -C ~/dotfiles/.git describe --tags)
+set -l hash (command git -C ~/dotfiles/.git --work-tree=../ rev-list --tags='v*' --max-count=1 2> /dev/null)
+set -l latest (command git -C ~/dotfiles/.git --work-tree=../ describe --tags $hash)
 echo "Current: "$cur" Latest:" $latest
 
 if [ $cur != $latest ]
 	# Checkout the release.
 	echo "Checking out new release"
-	command git -C ~/dotfiles-new/.git --work-tree=../ checkout --quiet tags/$latest
-	cp -rf ~/dotfiles-new/(ls -A ~/dotfiles-new | grep -v ".git") ~/
+	command git -C ~/dotfiles/.git --work-tree=../ checkout --quiet tags/$latest
+	cp -rf ~/dotfiles/(ls -A ~/dotfiles | grep -v ".git") ~/
 	source ~/.config/fish/config.fish
 else
 	echo "Already up-to-date"
