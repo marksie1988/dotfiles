@@ -37,12 +37,12 @@ set -e
 custom_dotfiles=${DOTFILES:+yes}
 
 # Default settings
-DOTFILES=${DOTFILES:~/dotfiles}
+DOTFILES=${DOTFILES:-~/dotfiles}
 REPO=${REPO:-marksie1988/dotfiles}
 REMOTE=${REMOTE:-https://github.com/${REPO}.git}
 BRANCH=${BRANCH:-master}
 
-
+echo $DOTFILES
 # Other options
 CHSH=${CHSH:-yes}
 RUNFISH=${RUNFISH:-yes}
