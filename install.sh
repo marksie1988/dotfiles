@@ -40,7 +40,7 @@ custom_dotfiles=${DOTFILES:+yes}
 DOTFILES=${DOTFILES:-~/dotfiles}
 REPO=${REPO:-marksie1988/dotfiles}
 REMOTE=${REMOTE:-https://github.com/${REPO}.git}
-BRANCH=${BRANCH:-master}
+BRANCH=${BRANCH:-v1.0.2}
 
 echo $DOTFILES
 # Other options
