@@ -1,12 +1,12 @@
 #!/bin/sh
 #
 # this script should be run via curl:
-#   sh -c "$(wget -qO- https://raw.githubusercontent.com/marksie1988/dotfiles-new/master/install.sh)"
+#   sh -c "$(wget -qO- https://raw.githubusercontent.com/marksie1988/dotfiles/master/install.sh)"
 # or via fetch:
-#   sh -c "$(fetch -o - https://raw.githubusercontent.com/marksie1988/dotfiles-new/master/install.sh)"
+#   sh -c "$(fetch -o - https://raw.githubusercontent.com/marksie1988/dotfiles/master/install.sh)"
 #
 # As an alternative, you can first download the install script and run it afterwards:
-#   wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+#   wget https://raw.githubusercontent.com/marksie1988/dotfiles/master/tools/install.sh
 #   sh install.sh
 #
 # You can tweak the install behavior by setting variables when running the script. For
@@ -147,7 +147,7 @@ setup_fish() {
 
   echo "${GREEN}Copying the dotfiles fish config.${RESET}"
 
-  cp -rf `find ~/dotfiles -mindepth 1 | grep -v ".git"` ~/
+  cp -rf `find ~/dotfiles -mindepth 1 -maxdepth 1 | grep -v ".git"` ~/
 
   echo
 }
