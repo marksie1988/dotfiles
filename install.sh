@@ -147,7 +147,7 @@ setup_fish() {
 
   echo "${GREEN}Copying the dotfiles fish config.${RESET}"
 
-  cp -rf `ls -A ~/dotfiles-new/ | grep -v ".git"` ~/
+  cp -rf `ls -A ~/dotfiles/ | grep -v ".git"` ~/
 
   echo
 }
