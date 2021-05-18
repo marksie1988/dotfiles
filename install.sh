@@ -128,7 +128,7 @@ setup_fish() {
   if [ -d ~/.config/fish ] || [ -h ~/.config/fish ]; then
 	echo "${YELLOW}Found ~/.config/fish.${RESET} ${GREEN}Keeping...${RESET}"
 	return
-  
+
 	if [ -d "$OLD_FISHCONF" ]; then
 	  OLD_OLD_FISHCONF="${OLD_FISHCONF}-$(date +%Y-%m-%d_%H-%M-%S)"
 	  if [ -e "$OLD_OLD_FISHCONF" ]; then
@@ -147,7 +147,7 @@ setup_fish() {
 
   echo "${GREEN}Copying the dotfiles fish config.${RESET}"
 
-  cp -rf `ls -A ~/dotfiles/ | grep -v ".git"` ~/
+  cp -rf `find ~/dotfiles -mindepth 1 | grep -v ".git"` ~/
 
   echo
 }
@@ -160,7 +160,7 @@ setup_shell() {
 
   # If this user's login shell is already "fish", do not attempt to switch.
   if [ "$(basename -- "$SHELL")" = "fish" ]; then
-	return 
+	return
   fi
 
   # If this platform doesn't provide a "chsh" command, bail out.
@@ -314,7 +314,7 @@ main "$@"
 #check_for_software neovim
 #echo
 #check_for_software peco
-#echo 
+#echo
 #check_for_software exa
 #echo
 #fisher install jethrokuan/z
