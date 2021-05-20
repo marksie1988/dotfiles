@@ -1,33 +1,25 @@
 <h1 align="center">
   <br>
-  <img src="/.github/img/atomic_calendar_revive.png" alt="Atomic Calendar Revive">
+  marksie1988 DotFiles
 </h1>
 
-<h4 align="center">An advanced calendar card for Home Assistant Lovelace.</h4>
+<h4 align="center">DotFiles for developers.</h4>
 
 <p align="center">
-    <a href="https://github.com/marksie1988/atomic-calendar-revive/releases">
-    <img src="https://img.shields.io/github/v/release/marksie1988/atomic-calendar-revive?color=ff7034&label=Release&sort=semver&style=flat-square"
-         alt="Latest Release">
-    <a href="https://github.com/custom-components/hacs">
-    <img src="https://img.shields.io/badge/HACS-Default-orange.svg?style=flat-square"
-         alt="HACS"><br />
-    <a href="https://github.com/marksie1988/atomic-calendar-revive/commits/master">
-    <img src="https://img.shields.io/github/last-commit/marksie1988/atomic-calendar-revive.svg?style=flat-square&logo=github&logoColor=white"
+    <a href="https://github.com/marksie1988/dotfiles/commits/master">
+    <img src="https://img.shields.io/github/last-commit/marksie1988/dotfiles.svg?style=flat-square&logo=github&logoColor=white"
          alt="GitHub last commit">
-    <a href="https://github.com/marksie1988/atomic-calendar-revive/issues">
-    <img src="https://img.shields.io/github/issues-raw/marksie1988/atomic-calendar-revive.svg?style=flat-square&logo=github&logoColor=white"
+    <a href="https://github.com/marksie1988/dotfiles/issues">
+    <img src="https://img.shields.io/github/issues-raw/marksie1988/dotfiles.svg?style=flat-square&logo=github&logoColor=white"
          alt="GitHub issues">
-    <a href="https://github.com/marksie1988/atomic-calendar-revive/pulls">
-    <img src="https://img.shields.io/github/issues-pr-raw/marksie1988/atomic-calendar-revive.svg?style=flat-square&logo=github&logoColor=white"
+    <a href="https://github.com/marksie1988/dotfiles/pulls">
+    <img src="https://img.shields.io/github/issues-pr-raw/marksie1988/dotfiles.svg?style=flat-square&logo=github&logoColor=white"
          alt="GitHub pull requests">
 </p>
 
 <p align="center">
   <a href="#about">About</a> •
   <a href="#configuration">Configuration</a> •
-  <a href="#features">Features</a> •
-  <a href="#contributing">Contributing</a> •
   <a href="#author">Author</a> •
   <a href="#support">Support</a> •
   <a href="#donate">Donate</a> •
