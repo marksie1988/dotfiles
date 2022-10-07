@@ -1,11 +1,11 @@
 time_out () { perl -e 'alarm shift; exec @ARGV' "$@"; }
 
 echo "Checking for new dotfiles release."
-current=yadm describe --tags
-get_hash=yadm --work-tree=../ rev-list --tags='v*' --max-count=1 2> /dev/null
-latest=yadm --work-tree=../ describe --tags $get_hash
+CURRENT=yadm describe --tags
+GETHASH=yadm --work-tree=../ rev-list --tags='v*' --max-count=1 2> /dev/null
+LATEST=yadm --work-tree=../ describe --tags $GETHASH
 
-echo "Current: "$current" Latest:" $latest
+echo "Current: "$CURRENT" Latest:" $LATEST
 
 ({yadm fetch -q} &> /dev/null)
 
