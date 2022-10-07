@@ -31,4 +31,4 @@ time_out () { perl -e 'alarm shift; exec @ARGV' "$@"; }
 #	({cd ~/dotfiles} &> /dev/null && git pull -q && git submodule update --init --recursive)
 #fi
 
-source ~/zshrc.sh
+source ~/zsh/zshrc.sh
