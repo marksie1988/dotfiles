@@ -1,5 +1,5 @@
 time_out () { perl -e 'alarm shift; exec @ARGV' "$@"; }
-
+printf '%.s─' $(seq 1 $(tput cols))
 echo " Checking for new dotfiles release..."
 
 current() {
@@ -24,5 +24,5 @@ else
 	echo " Pulling Updates..."
 	(yadm pull -q && yadm submodule update --init --recursive)
 fi
-
+printf '%.s─' $(seq 1 $(tput cols))
 source ~/zsh/zshrc.sh
