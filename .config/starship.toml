@@ -1,28 +1,24 @@
 # ~/.config/starship.toml
 
 # Inserts a blank line between shell prompts
-add_newline = true
+add_newline = false
 
 # Change command timeout from 500 to 1000 ms
 command_timeout = 1000
 
 # Change the default prompt format
 # ---
-# old config ...
-# format = """\
-# [╭╴](238)$env_var\
-# $all[╰─](238)$character"""
+format = """\
+[╭╴](238)$env_var\
+$all[╰─](238)$character"""
 
 # new config
 format = """$env_var $all"""
 
 # Change the default prompt characters
 [character]
-# old config
-# success_symbol = "[](238)"
-# error_symbol = "[](238)"
-success_symbol = ""
-error_symbol = ""
+success_symbol = "[](238)"
+error_symbol = "[](238)"
 
 # Shows an icon that should be included by zshrc script based on the distribution or os
 [env_var.STARSHIP_DISTRO]
