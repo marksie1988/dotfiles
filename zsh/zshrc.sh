@@ -24,18 +24,18 @@ export KUBE_EDITOR=hx
 # Alias
 # ---
 #
-source ./zsh/aliases.sh
+source ~/zsh/aliases.sh
 
 # Functions
 # ---
 #
-source ./zsh/functions.sh
+source ~/zsh/functions.sh
 
 
 # Distribution Icon
 # ---
 #
-source ./zsh/distribution.sh
+source ~/zsh/distribution.sh
 
 # Load Starship
 eval "$(starship init zsh)"
