@@ -21,6 +21,11 @@ fix_wsl2_interop() {
 export EDITOR=hx
 export KUBE_EDITOR=hx
 
+# Key Bindings
+# ---
+#
+source ~/zsh/keybindings.sh
+
 # Alias
 # ---
 #
