@@ -1,5 +1,14 @@
 time_out () { perl -e 'alarm shift; exec @ARGV' "$@"; }
 printf '%.s─' $(seq 1 $(tput cols))
+
+echo "Checking software is installed"
+if ! [ -x "$(command -v yadm)" ]; then
+  sudo apt install yadm -y
+fi
+if ! [ -x "$(command -v zsh)" ]; then
+  sudo apt install zsh -y
+fi
+
 echo " Checking for new dotfiles release..."
 
 current() {
@@ -22,7 +31,12 @@ else
 	echo " Updates Detected:"
 	(yadm log ..@{u} --pretty=format:%Cred%aN:%Creset\ %s\ %Cgreen%cd)
 	echo " Pulling Updates..."
-	(yadm pull -q && yadm submodule update --init --recursive)
+	(yadm pull -q)
 fi
+# Check submodules are all installed and updated
+yadm submodule update --init --recursive -q
+
+
+
 printf '%.s─' $(seq 1 $(tput cols))
 source ~/zsh/zshrc.sh
