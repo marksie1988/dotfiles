@@ -5,8 +5,8 @@ plugins=(
 )
 
 for plugin ($plugins); do
-    fpath=(./plugins/$plugin $fpath)
-    source ./plugins/$plugin/$plugin.zsh
+    fpath=(~/plugins/$plugin $fpath)
+    source ~/plugins/$plugin/$plugin.zsh
 done
 
 compinit
