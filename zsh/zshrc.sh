@@ -15,6 +15,20 @@ fix_wsl2_interop() {
     done
 }
 
+# Fix for arrow-key searching
+# start typing + [Up-Arrow] - fuzzy find history forward
+if [[ "${terminfo[kcuu1]}" != "" ]]; then
+	autoload -U up-line-or-beginning-search
+	zle -N up-line-or-beginning-search
+	bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
+fi
+# start typing + [Down-Arrow] - fuzzy find history backward
+if [[ "${terminfo[kcud1]}" != "" ]]; then
+	autoload -U down-line-or-beginning-search
+	zle -N down-line-or-beginning-search
+	bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
+fi
+
 # History
 # --
 #
@@ -51,6 +65,11 @@ source ~/zsh/functions.sh
 # ---
 #
 source ~/zsh/distribution.sh
+
+# Plugins
+# ---
+#
+source ~/zsh/plugins.sh
 
 # Load Starship
 eval "$(starship init zsh)"
