@@ -1,6 +1,6 @@
 [user]
-	email = hi@craftz.dog
-	name = Takuya Matsuyama
+	email = marksie1988@users.noreply.github.com
+	name = Steven Marks
 [core]
 	excludesfile = ~/.gitignore
 	editor = nvim
@@ -46,7 +46,7 @@
   tool = nvimdiff
 [difftool "nvimdiff"]
 	cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "nvimdiff"]
 	cmd = nvim -d \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
