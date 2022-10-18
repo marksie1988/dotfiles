@@ -23,5 +23,6 @@ alias dt="datree"
 # ALIAS COMMANDS
 alias ls="exa --icons --group-directories-first"
 alias ll="exa --icons --group-directories-first -l"
+alias tree="exa --tree --icons"
 alias g="goto"
 alias grep='grep --color'
