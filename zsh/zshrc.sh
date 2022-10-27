@@ -71,5 +71,10 @@ source ~/zsh/distribution.sh
 #
 source ~/zsh/plugins.sh
 
+# Exports / Path updates
+# ---
+#
+source ~/zsh/exports.sh
+
 # Load Starship
 eval "$(starship init zsh)"
