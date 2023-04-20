@@ -1,11 +1,42 @@
 time_out () { perl -e 'alarm shift; exec @ARGV' "$@"; }
 printf '%.s─' $(seq 1 $(tput cols))
 
-echo "Checking software is installed"
+echo "Checking starship is installed"
+if ! [ -x "$(command -v starship)"]; then
+  echo "Installing Starship..."
+  cd /tmp
+  curl -s https://api.github.com/repos/starship/starship/releases/latest \
+  | grep browser_download_url \
+  | grep x86_64-unknown-linux-gnu \
+  | cut -d '"' -f 4 \
+  | wget -qi -
+  tar xvf starship-*.tar.gz
+  sudo mv starship /usr/local/bin/
+  starship --version
+fi
+
+echo "Checking exa is installed"
+if  ! [ -x "$(command -v exa)" ]; then
+  echo "Installing exa..."
+  cd /tmp
+  curl -s https://api.github.com/repos/ogham/exa/releases/latest \
+  | grep browser_download_url \
+  | grep linux-x86_64-v \
+  | cut -d '"' -f 4 \
+  | wget -qi -
+  unzip exa-*.zip -f /tmp/exa
+  sudo mv exa/bin/exa /usr/local/bin/
+fi
+
+echo "Checking yadm is installed"
 if ! [ -x "$(command -v yadm)" ]; then
+  echo "Installing yadm..."
   sudo apt install yadm -y
 fi
+
+echo "Checking zsh is installed"
 if ! [ -x "$(command -v zsh)" ]; then
+  echo "Installing zsh..."
   sudo apt install zsh -y
 fi
 
@@ -34,8 +65,12 @@ else
 	(yadm pull -q)
 fi
 # Check submodules are all installed and updated
+cd ~
 yadm submodule update --init --recursive -q
 
+# Check exa completions are installed:
+mkdir -p ~/zsh/plugins/exa
+mv /tmp/exa/completions/exa.zsh ~/zsh/plugins/exa/
 
 
 printf '%.s─' $(seq 1 $(tput cols))
