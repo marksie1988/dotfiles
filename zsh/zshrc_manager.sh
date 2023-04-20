@@ -46,7 +46,7 @@ current() {
     yadm describe --tags
 }
 hash(){
-	yadm --work-tree=../ rev-list --tags='v*' --max-count=1 2> /dev/null
+	yadm --work-tree=../ rev-list --tags='*.*.*' --max-count=1 2> /dev/null
 }
 latest() {
     yadm --work-tree=../ describe --tags $(hash)
