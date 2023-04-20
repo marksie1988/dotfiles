@@ -2,7 +2,7 @@ time_out () { perl -e 'alarm shift; exec @ARGV' "$@"; }
 printf '%.s─' $(seq 1 $(tput cols))
 
 echo "Checking starship is installed"
-if ! [ -x "$(command -v starship)"]; then
+if ! [ -x "$(command -v starship)" ]; then
   echo "Installing Starship..."
   cd /tmp
   curl -s https://api.github.com/repos/starship/starship/releases/latest \
@@ -12,7 +12,7 @@ if ! [ -x "$(command -v starship)"]; then
   | wget -qi -
   tar xvf starship-*.tar.gz
   sudo mv starship /usr/local/bin/
-  starship --version
+  starship -V
 fi
 
 echo "Checking exa is installed"
