@@ -19,7 +19,7 @@ if ! [ -x "$(command -v starship)" ]; then
 	$(starship_install)
 else
 	starship_latest() {
-		curl -s https://api.github.com/repos/starship/starship/releases/latest | grep tag_name | cut -d '"' -f 4
+		curl -s https://api.github.com/repos/starship/starship/releases/latest | grep tag_name | cut -d '"' -f 4 | cut -d "v" -f 2
 	}
 	starship_current() {
 		starship -V | grep starship | cut -d ' ' -f 2
