@@ -28,7 +28,8 @@ starship_install() {
 	| cut -d '"' -f 4 \
 	| wget -qi -
 	tar xvf starship-*.tar.gz
-	sudo mv starship /usr/local/bin/
+	sudo mv /tmp/starship /usr/local/bin/
+	rm -rf /tmp/starship*
 	starship -V
 }
 if ! [ -x "$(command -v starship)" ]; then
@@ -55,9 +56,10 @@ exa_install() {
 	| cut -d '"' -f 4 \
 	| wget -qi -
 	unzip exa-*.zip -d /tmp/exa
-	sudo mv bin/exa /usr/local/bin/
+	sudo mv /tmp/exa/bin/exa /usr/local/bin/
 	mkdir -p ~/zsh/plugins/exa
 	mv /tmp/exa/completions/exa.zsh ~/zsh/plugins/exa/
+	rm -rf /tmp/exa*
 }
 if  ! [ -x "$(command -v exa)" ]; then
   	echo "Installing exa..."
