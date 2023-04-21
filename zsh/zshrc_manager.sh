@@ -1,7 +1,24 @@
 time_out () { perl -e 'alarm shift; exec @ARGV' "$@"; }
 printf '%.s─' $(seq 1 $(tput cols))
 
-echo "Checking starship is installed"
+echo "Checking dependencies are installed..."
+if ! [ -x "$(command -v yadm)" ]; then
+  echo "Installing yadm..."
+  sudo apt install yadm -y
+fi
+if ! [ -x "$(command -v zsh)" ]; then
+  echo "Installing zsh..."
+  sudo apt install zsh -y
+fi
+if ! [ -x "$(command -v curl)" ]; then
+  echo "Installing curl..."
+  sudo apt install curl -y
+fi
+if ! [ -x "$(command -v unzip)" ]; then
+  echo "Installing unzip..."
+  sudo apt install unzip -y
+fi
+
 
 starship_install() {
 	cd /tmp
@@ -30,7 +47,6 @@ else
 	fi
 fi
 
-echo "Checking exa is installed"
 exa_install() {
 	cd /tmp
 	curl -s https://api.github.com/repos/ogham/exa/releases/latest \
@@ -38,8 +54,8 @@ exa_install() {
 	| grep linux-x86_64-v \
 	| cut -d '"' -f 4 \
 	| wget -qi -
-	unzip exa-*.zip -f /tmp/exa
-	sudo mv exa/bin/exa /usr/local/bin/
+	unzip exa-*.zip -d /tmp/exa
+	sudo mv bin/exa /usr/local/bin/
 	mkdir -p ~/zsh/plugins/exa
 	mv /tmp/exa/completions/exa.zsh ~/zsh/plugins/exa/
 }
@@ -57,18 +73,6 @@ else
 		echo "Upgrading exa..."
 		$(exa_install)
 	fi
-fi
-
-echo "Checking yadm is installed"
-if ! [ -x "$(command -v yadm)" ]; then
-  echo "Installing yadm..."
-  sudo apt install yadm -y
-fi
-
-echo "Checking zsh is installed"
-if ! [ -x "$(command -v zsh)" ]; then
-  echo "Installing zsh..."
-  sudo apt install zsh -y
 fi
 
 echo " Checking for new dotfiles release..."
