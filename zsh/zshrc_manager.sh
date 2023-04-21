@@ -98,6 +98,9 @@ else
 	(yadm log ..@{u} --pretty=format:%Cred%aN:%Creset\ %s\ %Cgreen%cd)
 	echo " Pulling Updates..."
 	(yadm pull -q)
+	echo "Reloading profile..."
+	source ~/.zshrc
+	echo "Done"
 fi
 # Check submodules are all installed and updated
 cd ~
