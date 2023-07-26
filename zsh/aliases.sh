@@ -23,6 +23,7 @@ alias gcm='git add -A && git commit -m'
 alias undo='git reset HEAD~1 --mixed'
 alias gr='git remote -v'
 alias ssha='eval $(ssh-agent) && ssh-add'
+alias gum='git fetch upstream && git merge upstream/master'
 
 # Automtion
 alias tf="terraform"
