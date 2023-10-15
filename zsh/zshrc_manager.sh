@@ -83,18 +83,19 @@ fi
 
 echo " Checking for new dotfiles release..."
 
-current() {
-    yadm describe --tags
+yadm fetch --tags
+
+local_tag() {
+    yadm describe --tags --abbrev=0
 }
-latest() {
-	yadm fetch --tags
-    yadm describe --tags --abbrev=0 origin/master
+remote_tag() {
+	yadm describe --tags --abbrev=0 origin/master
 }
 echo "Current: $(current) Latest: $(latest)"
 
 ({yadm fetch -q} &> /dev/null)
 
-if [ $(yadm rev-list HEAD...origin/master | wc -l) = 0 ]
+if [ "$(yadm rev-list -n 1 $local_tag)" != "$(yadm rev-list -n 1 $remote_tag)" ]; then
 then
 	echo " Already up-to-date."
 else
