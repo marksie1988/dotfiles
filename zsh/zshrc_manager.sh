@@ -18,6 +18,10 @@ if ! [ -x "$(command -v unzip)" ]; then
   echo "Installing unzip..."
   sudo apt install unzip -y
 fi
+if ! [ -x "$(command -v wget)" ]; then
+  echo "Installing wget..."
+  sudo apt install wget -y
+fi
 
 
 starship_install() {
@@ -34,7 +38,7 @@ starship_install() {
 }
 if ! [ -x "$(command -v starship)" ]; then
   	echo "Installing Starship..."
-	$(starship_install)
+	starship_install
 else
 	starship_latest() {
 		curl -s https://api.github.com/repos/starship/starship/releases/latest | grep tag_name | cut -d '"' -f 4 | cut -d "v" -f 2
@@ -44,7 +48,7 @@ else
 	}
 	if [ $(starship_latest) != $(starship_current) ]; then
 		echo "Upgrading Starship..."
-		$(starship_install)
+		starship_install
 	fi
 fi
 
@@ -63,7 +67,7 @@ exa_install() {
 }
 if  ! [ -x "$(command -v exa)" ]; then
   	echo "Installing exa..."
-	$(exa_install)
+	exa_install
 else
 	exa_latest() {
 		curl -s https://api.github.com/repos/ogham/exa/releases/latest | grep tag_name | cut -d '"' -f 4
@@ -73,7 +77,7 @@ else
 	}
 	if [ $(exa_latest) != $(exa_current) ]; then
 		echo "Upgrading exa..."
-		$(exa_install)
+		exa_install
 	fi
 fi
 
