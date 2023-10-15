@@ -43,10 +43,10 @@ else
 	starship_latest() {
 		curl -s https://api.github.com/repos/starship/starship/releases/latest | grep tag_name | cut -d '"' -f 4 | cut -d "v" -f 2
 	}
-	starship_current() {
+	starship_installed() {
 		starship -V | grep starship | cut -d ' ' -f 2
 	}
-	if [ $(starship_latest) != $(starship_current) ]; then
+	if [ "$starship_installed" != "$starship_latest" ]; then
 		echo "Upgrading Starship..."
 		starship_install
 	fi
@@ -72,10 +72,10 @@ else
 	exa_latest() {
 		curl -s https://api.github.com/repos/ogham/exa/releases/latest | grep tag_name | cut -d '"' -f 4
 	}
-	exa_current() {
+	exa_local() {
 		exa --version | grep v | cut -d " " -f 1
 	}
-	if [ $(exa_latest) != $(exa_current) ]; then
+	if [ "$exa_latest" != "$exa_local" ]; then
 		echo "Upgrading exa..."
 		exa_install
 	fi
@@ -91,7 +91,7 @@ local_tag() {
 remote_tag() {
 	yadm describe --tags --abbrev=0 origin/master
 }
-echo "Current: $(current) Latest: $(latest)"
+echo "Local: $(local_tag) Latest: $(remote_tag)"
 
 
 
