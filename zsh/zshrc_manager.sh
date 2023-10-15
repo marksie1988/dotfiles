@@ -97,8 +97,6 @@ echo "Current: $(current) Latest: $(latest)"
 
 if [ "$(yadm rev-list -n 1 $local_tag)" != "$(yadm rev-list -n 1 $remote_tag)" ]; then
 then
-	echo " Already up-to-date."
-else
 	echo " Updates Detected:"
 	(yadm log ..@{u} --pretty=format:%Cred%aN:%Creset\ %s\ %Cgreen%cd)
 	echo " Pulling Updates..."
@@ -106,6 +104,8 @@ else
 	echo "Reloading profile..."
 	source ~/.zshrc
 	echo "Done"
+else
+	echo " Already up-to-date."
 fi
 # Check submodules are all installed and updated
 cd ~
