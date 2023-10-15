@@ -83,7 +83,7 @@ fi
 
 echo " Checking for new dotfiles release..."
 
-yadm fetch --tags
+yadm fetch --tags 2>/dev/null
 
 local_tag() {
     yadm describe --tags --abbrev=0
@@ -93,7 +93,7 @@ remote_tag() {
 }
 echo "Current: $(current) Latest: $(latest)"
 
-({yadm fetch -q} &> /dev/null)
+
 
 if [ "$(yadm rev-list -n 1 $local_tag)" != "$(yadm rev-list -n 1 $remote_tag)" ]; then
 then
