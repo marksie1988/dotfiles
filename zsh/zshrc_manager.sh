@@ -86,11 +86,9 @@ echo " Checking for new dotfiles release..."
 current() {
     yadm describe --tags
 }
-hash(){
-	yadm --work-tree=../ rev-list --tags='*.*.*' --max-count=1 2> /dev/null
-}
 latest() {
-    yadm --work-tree=../ describe --tags $(hash)
+	yadm fetch --tags
+    yadm describe --tags --abbrev=0 origin/master
 }
 echo "Current: $(current) Latest: $(latest)"
 
