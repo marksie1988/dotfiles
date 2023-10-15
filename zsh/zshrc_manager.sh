@@ -95,7 +95,7 @@ echo "Local: $(local_tag) Latest: $(remote_tag)"
 
 
 
-if [ "$(yadm rev-list -n 1 $local_tag)" != "$(yadm rev-list -n 1 $remote_tag)" ]; then
+if [ "$(yadm rev-list -n 1 $(local_tag))" != "$(yadm rev-list -n 1 $(remote_tag))" ]; then
 	echo " Updates Detected:"
 	(yadm log ..@{u} --pretty=format:%Cred%aN:%Creset\ %s\ %Cgreen%cd)
 	echo " Pulling Updates..."
