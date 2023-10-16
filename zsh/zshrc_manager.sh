@@ -107,7 +107,6 @@ else
 	echo " Already up-to-date."
 fi
 # Check submodules are all installed and updated
-cd ~
 yadm submodule update --init --recursive -q
 
 printf '%.s─' $(seq 1 $(tput cols))
