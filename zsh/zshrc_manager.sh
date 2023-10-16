@@ -106,8 +106,6 @@ if [ "$(yadm rev-list -n 1 $(local_tag))" != "$(yadm rev-list -n 1 $(remote_tag)
 else
 	echo " Already up-to-date."
 fi
-# Check submodules are all installed and updated
-yadm submodule update --init --recursive -q
 
 printf '%.s─' $(seq 1 $(tput cols))
 source ~/zsh/zshrc.sh
