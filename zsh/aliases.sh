@@ -49,3 +49,10 @@ alias path='echo -e ${PATH//:/\\n}'
 # Show human friendly numbers and colors
 alias df='df -h'
 alias du='du -h -d 2'
+
+# Tmux
+alias t='tmux'
+alias ta='tmux a'
+
+alias shrug="echo '¯\_(ツ)_/¯'"
+alias neofetch='neofetch --ascii_colors 2 7 --colors 2 7 2 2 7 7 2'

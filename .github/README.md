@@ -37,8 +37,7 @@
 
 This repository contains dotfiles that I use within my development environments.
 
-I utilise Fish as the shell and neovim as the text editor, I also have various plugins
-that improve the visualisation of fish.
+I utilise Zsh as the shell, starship for the looks and multiple other enhancements.
 
 </td>
 </tr>
@@ -51,17 +50,16 @@ In order to use these dotfiles:
 Install a powerline patched font: [Nerd fonts](https://github.com/ryanoasis/nerd-fonts) Powerline-patched fonts ( I like Sauce Code Pro)
 
 ```sh
-sudo apt install fish neovim peco
-sh -c "$(wget -qO- https://raw.githubusercontent.com/marksie1988/dotfiles/master/install.sh)"
-curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
-fisher install jethrokuan/z
-curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-sh ./installer.sh ~/.cache/dein
+sudo apt install -y yadm zsh
+chsh $(which zsh)
+yadm clone https://github.com/marksie1988/dotfiles.git
 ```
+
+Reload into a `zsh` shell, then the dotfiles will install required packages and setup your shell.
 
 ## Author
 
-| [![TotalDebug](https://totaldebug.uk/assets/images/logo.png)](https://linkedin.com/in/marksie1988) 	|
+| [![TotalDebug](https://totaldebug.uk/assets/images/logo.png)](https://in.totaldebug.uk)  |
 |:-------------------------:     |
 | **marksie1988 (Steven Marks)** |
 
@@ -69,15 +67,16 @@ sh ./installer.sh ~/.cache/dein
 
 Reach out to me at one of the following places:
 
-- [Discord](https://discord.gg/6fmekudc8Q)
+- [Discord](https://discord.totaldebug.uk)
 - [Issues](https://github.com/marksie1988/dotfiles/issues/new/choose)
 
 ## Donate
 
-Please consider supporting this project by sponsoring, or just donating a little via [our sponsor page](https://github.com/sponsors/marksie1988)
+Please consider supporting this project by sponsoring, or just donating a little via [my sponsor page](https://github.com/sponsors/marksie1988)
 
 ## Credits
- - [craftzdog](https://github.com/craftzdog) Origional source for base dotfiles
+
+- None at this time
 
 ## License
 
