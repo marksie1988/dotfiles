@@ -61,8 +61,8 @@ exa_install() {
 	| wget -qi -
 	unzip exa-*.zip -d /tmp/exa
 	sudo mv /tmp/exa/bin/exa /usr/local/bin/
-	mkdir -p ~/zsh/plugins/exa
-	mv /tmp/exa/completions/exa.zsh ~/zsh/plugins/exa/
+	mkdir -p ~/.zsh/plugins/exa
+	mv /tmp/exa/completions/exa.zsh ~/.zsh/plugins/exa/
 	rm -rf /tmp/exa*
 }
 if  ! [ -x "$(command -v exa)" ]; then
@@ -108,4 +108,4 @@ else
 fi
 
 printf '%.s─' $(seq 1 $(tput cols))
-source ~/zsh/zshrc.sh
+source ~/.zsh/zshrc.sh

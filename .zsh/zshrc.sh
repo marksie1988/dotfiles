@@ -48,33 +48,33 @@ export KUBE_EDITOR=hx
 # Key Bindings
 # ---
 #
-source ~/zsh/keybindings.sh
+source ~/.zsh/keybindings.sh
 
 # Alias
 # ---
 #
-source ~/zsh/aliases.sh
+source ~/.zsh/aliases.sh
 
 # Functions
 # ---
 #
-source ~/zsh/functions.sh
+source ~/.zsh/functions.sh
 
 
 # Distribution Icon
 # ---
 #
-source ~/zsh/distribution.sh
+source ~/.zsh/distribution.sh
 
 # Plugins
 # ---
 #
-source ~/zsh/plugins.sh
+source ~/.zsh/plugins.sh
 
 # Exports / Path updates
 # ---
 #
-source ~/zsh/exports.sh
+source ~/.zsh/exports.sh
 
 # Load Starship
 eval "$(starship init zsh)"
