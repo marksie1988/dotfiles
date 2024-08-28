@@ -1,6 +1,7 @@
 # find out which distribution we are running on
+LFILE="/etc/*-release"
 MFILE="/System/Library/CoreServices/SystemVersion.plist"
-if ls /etc/*-release 1> /dev/null 2>&1; then
+if [[ -f $LFILE ]]; then
   _distro=$(awk '/^ID=/' /etc/*-release | awk -F'=' '{ print tolower($2) }')
 elif [[ -f $MFILE ]]; then
   _distro="macos"
