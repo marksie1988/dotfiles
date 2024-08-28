@@ -1,28 +1,37 @@
 time_out () { perl -e 'alarm shift; exec @ARGV' "$@"; }
 printf '%.s─' $(seq 1 $(tput cols))
 
-echo "Checking dependencies are installed..."
-if ! [ -x "$(command -v yadm)" ]; then
-  echo "Installing yadm..."
-  sudo apt install yadm -y
-fi
-if ! [ -x "$(command -v zsh)" ]; then
-  echo "Installing zsh..."
-  sudo apt install zsh -y
-fi
-if ! [ -x "$(command -v curl)" ]; then
-  echo "Installing curl..."
-  sudo apt install curl -y
-fi
-if ! [ -x "$(command -v unzip)" ]; then
-  echo "Installing unzip..."
-  sudo apt install unzip -y
-fi
-if ! [ -x "$(command -v wget)" ]; then
-  echo "Installing wget..."
-  sudo apt install wget -y
+# Detect the operating system
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS
+  INSTALL_CMD="brew install"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  # Linux
+  INSTALL_CMD="sudo apt install -y"
+else
+  echo "Unsupported OS: $OSTYPE"
+  exit 1
 fi
 
+
+# List of commands and corresponding package names
+packages=(yadm zsh curl unzip wget jq)
+
+# Function to check and install a command if it doesn't exist
+install_if_missing() {
+  local pkg=$1
+
+  if ! command -v "$pkg" > /dev/null; then
+    echo "Installing $pkg..."
+    $INSTALL_CMD "$pkg"
+  fi
+}
+
+echo "Checking dependencies are installed..."
+# Loop through the list of packages and install if missing
+for pkg in "${packages[@]}"; do
+  install_if_missing "$pkg"
+done
 
 starship_install() {
 	cd /tmp
@@ -52,34 +61,9 @@ else
 	fi
 fi
 
-exa_install() {
-	cd /tmp
-	curl -s https://api.github.com/repos/ogham/exa/releases/latest \
-	| grep browser_download_url \
-	| grep linux-x86_64-v \
-	| cut -d '"' -f 4 \
-	| wget -qi -
-	unzip exa-*.zip -d /tmp/exa
-	sudo mv /tmp/exa/bin/exa /usr/local/bin/
-	mkdir -p ~/.zsh/plugins/exa
-	mv /tmp/exa/completions/exa.zsh ~/.zsh/plugins/exa/
-	rm -rf /tmp/exa*
-}
-if  ! [ -x "$(command -v exa)" ]; then
-  	echo "Installing exa..."
-	exa_install
-else
-	exa_latest() {
-		curl -s https://api.github.com/repos/ogham/exa/releases/latest | grep tag_name | cut -d '"' -f 4
-	}
-	exa_local() {
-		exa --version | grep v | cut -d " " -f 1
-	}
-	if [ "$exa_latest" != "$exa_local" ]; then
-		echo "Upgrading exa..."
-		exa_install
-	fi
-fi
+# Import EZA instaler function & execure
+source ~/.zsh/installers/eza.sh
+install_eza
 
 echo " Checking for new dotfiles release..."
 
