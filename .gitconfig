@@ -40,8 +40,6 @@
 
 [hub]
   protocol = https
-[github]
-	user = marksie1988
 [diff]
   tool = nvimdiff
 [difftool "nvimdiff"]
