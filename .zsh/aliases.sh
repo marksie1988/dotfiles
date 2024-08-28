@@ -27,15 +27,17 @@ alias ssha='eval $(ssh-agent) && ssh-add'
 alias gum='git fetch upstream && git merge upstream/master'
 
 # Automtion
+alias k="kubectl"
+alias h="helm"
 alias tf="terraform"
 alias a="ansible"
 alias ap="ansible-playbook"
-
+alias code="open -a 'Visual Studio Code'"
 
 # ALIAS COMMANDS
-alias ls="exa --icons --group-directories-first"
-alias ll="exa --icons --group-directories-first -l"
-alias tree="exa --tree --icons"
+alias ls="eza --icons --group-directories-first"
+alias ll="eza --icons --group-directories-first -l"
+alias tree="eza --tree --icons"
 alias grep='grep --color'
 
 # IP Information
