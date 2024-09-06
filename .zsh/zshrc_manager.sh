@@ -65,6 +65,10 @@ fi
 source ~/.zsh/installers/eza.sh
 install_eza
 
+# Import EZA instaler function & execure
+source ~/.zsh/installers/helix.sh
+install_helix
+
 echo " Checking for new dotfiles release..."
 
 yadm fetch --tags 2>/dev/null

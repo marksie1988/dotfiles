@@ -34,6 +34,10 @@ alias a="ansible"
 alias ap="ansible-playbook"
 alias code="open -a 'Visual Studio Code'"
 
+# vim / nano alias
+alias vi="hx"
+alias nano="hx"
+
 # ALIAS COMMANDS
 alias ls="eza --icons --group-directories-first"
 alias ll="eza --icons --group-directories-first -l"
