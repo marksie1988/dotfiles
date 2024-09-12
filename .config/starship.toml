@@ -2,7 +2,7 @@
 
 add_newline = false
 command_timeout = 1000
-format = """$os$username$hostname$kubernetes$directory$git_branch$git_status"""
+format = """$os$time$kubernetes$directory$git_branch$git_status"""
 
 # Drop ugly default prompt characters
 [character]
@@ -23,6 +23,14 @@ Macos = '󰀵'
 
 # ---y
 
+# Shows the time 
+[time]
+disabled = false
+format = '[$time]($style) '
+time_format = "%F %T" # You can also use other strftime format strings to customize.
+style = "bold yellow" # You can change the style of the timestamp.
+
+
 # Shows the username
 [username]
 style_user = 'white bold'
@@ -34,7 +42,7 @@ show_always = true
 # Shows the hostname
 [hostname]
 ssh_only = false
-format = 'on [$hostname](bold yellow) '
+format = '[$hostname](bold yellow) '
 disabled = false
 
 # Shows current directory
@@ -44,7 +52,7 @@ truncation_symbol = '…/'
 home_symbol = '󰋜 ~'
 read_only_style = '197'
 read_only = '  '
-format = 'at [$path]($style)[$read_only]($read_only_style) '
+format = '[$path]($style)[$read_only]($read_only_style) '
 
 # Shows current git branch
 [git_branch]
@@ -58,21 +66,21 @@ style = 'bold green'
 [git_status]
 format = '([ \( $all_status$ahead_behind\)]($style) )'
 style = 'bold green'
-conflicted = '[ confliced=${count}](red) '
-up_to_date = '[󰘽 up-to-date](green) '
-untracked = '[󰋗 untracked=${count}](red) '
+conflicted = '[ conf=${count}](red) '
+up_to_date = '[󰘽 u2d](green) '
+untracked = '[󰋗 unt=${count}](red) '
 ahead = ' ahead=${count}'
 diverged = ' ahead=${ahead_count}  behind=${behind_count}'
 behind = ' behind=${count}'
-stashed = '[ stashed=${count}](green) '
-modified = '[󰛿 modified=${count}](yellow) '
-staged = '[󰐗 staged=${count}](green) '
-renamed = '[󱍸 renamed=${count}](yellow) '
-deleted = '[󰍶 deleted=${count}](red) '
+stashed = '[ stash=${count}](green) '
+modified = '[󰛿 mod=${count}](yellow) '
+staged = '[󰐗 sta=${count}](green) '
+renamed = '[󱍸 ren=${count}](yellow) '
+deleted = '[󰍶 del=${count}](red) '
 
 # Shows kubernetes context and namespace
 [kubernetes]
-format = 'via [󱃾 $context\($namespace\)](bold purple) '
+format = '[󱃾 $context\($namespace\)](bold purple) '
 disabled = false
 
 # ---
