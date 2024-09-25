@@ -2,8 +2,8 @@
 	email = marksie1988@users.noreply.github.com
 	name = Steven Marks
 
-[includeIf "gitdir:~/work/"]
-    path = ~/work/.gitconfig
+[includeIf "gitdir:~/repos/work/"]
+    path = ~/repos/work/.gitconfig
 
 [core]
 	excludesfile = ~/.gitignore
