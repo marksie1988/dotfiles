@@ -11,9 +11,8 @@
   };
 
   outputs = { self, nixpkgs, home-manager }:
-    let 
-      system   
- = builtins.currentSystem;
+    let
+      system = builtins.currentSystem;
       pkgs = import nixpkgs { inherit system; };
       isMacOS = system == "x86_64-darwin";
     in {
@@ -21,7 +20,7 @@
         pkgs = pkgs;
         modules = [
           # Import Home Manager modules
-          home-manager.modules.programs.zsh 
+          home-manager.modules.programs.zsh
           home-manager.modules.home.file
 
           {
@@ -39,7 +38,7 @@
           # Your custom modules
           ./modules/packages.nix
           ./modules/zsh.nix
-          ./modules/dotfiles.nix 
+          ./modules/dotfiles.nix
 
           # Conditional module for macOS
           (if isMacOS then ./modules/macos/default.nix else ./modules/ubuntu/default.nix)

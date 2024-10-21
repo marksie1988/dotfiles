@@ -6,7 +6,7 @@
     path = ~/repos/work/.gitconfig
 
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = ~/.config/git/ignore
 	editor = hx
 [push]
   default = simple
@@ -44,3 +44,12 @@
 
 [hub]
   protocol = https
+
+[fetch]
+    # https://stackoverflow.com/a/8255687/5246998
+    prune = true
+[http]
+    # https://stackoverflow.com/a/6849424/5246998
+    postBuffer = 1048576000
+[init]
+	defaultBranch = main

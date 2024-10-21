@@ -23,15 +23,7 @@ samples
 Gemfile.lock
 node_modules
 bower_components
-fishd.*
 
-# Vim
-Session.vim
-.vim/bundle/
-.vimrc_sample
-.vim/ftdetect/Dockerfile.vim
-.vim/syntax/Dockerfile.vim
-.vim/snippets/
 
 # Xcode
 build/
@@ -51,18 +43,3 @@ DerivedData
 *.ipa
 *.xcuserstate
 *.xcworkspace/xcshareddata
-
-# CocoaPods
-Pods/
-
-# Atom.io
-.atom/packages/save-session
-.atom/compile-cache
-.atom/storage
-
-# Fish local config
-.config/fish/config-local.fish
-.config/fish/fish_variables.x86_64
-
-# Karabiner
-.config/karabiner/automatic_backups
