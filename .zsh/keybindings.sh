@@ -25,3 +25,6 @@ bindkey  "^[[4~"   end-of-line
 
 # Bind Delete Key
 bindkey "^[[3~" delete-char
+
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search

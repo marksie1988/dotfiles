@@ -1,5 +1,6 @@
 alias nrb='npm run build'
 alias sha256='shasum -a 256'
+alias rand32='openssl rand -base64 32'
 
 # Easier navigation
 alias ..="cd .."
@@ -33,6 +34,8 @@ alias tf="terraform"
 alias a="ansible"
 alias ap="ansible-playbook"
 alias code="open -a 'Visual Studio Code'"
+
+alias tg="terragrunt"
 
 # vim / nano alias
 alias vi="hx"

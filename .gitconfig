@@ -1,13 +1,13 @@
 [user]
-	email = marksie1988@users.noreply.github.com
-	name = Steven Marks
+  email = marksie1988@users.noreply.github.com
+  name = Steven Marks
 
 [includeIf "gitdir:~/repos/work/"]
-    path = ~/repos/work/.gitconfig
+  path = ~/repos/work/.gitconfig
 
 [core]
-	excludesfile = ~/.gitignore
-	editor = hx
+  excludesfile = ~/.gitignore
+  editor = hx
 [push]
   default = simple
 [color]
@@ -44,3 +44,6 @@
 
 [hub]
   protocol = https
+
+[gpg]
+  program = $(which gpg)

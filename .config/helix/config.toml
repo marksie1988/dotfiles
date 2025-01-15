@@ -1,4 +1,4 @@
-theme = "marksie1988"
+theme = "tokyonight"
 
 [editor]
 line-number = "absolute"
@@ -17,3 +17,9 @@ separator = "│"
 [editor.indent-guides]
 render = false
 character = ""
+
+[keys.normal.space]
+"y" = ":clipboard-yank-join" # Join and yank selections to clipboard
+
+[keys.select.space]
+"y" = ":clipboard-yank-join" # Join and yank selections to clipboard
