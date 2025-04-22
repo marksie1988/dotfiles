@@ -47,3 +47,4 @@
 
 [gpg]
   program = $(which gpg)
+  # program = /opt/homebrew/bin/gpg

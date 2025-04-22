@@ -53,7 +53,7 @@
 
 
 [palette]
-black     = "#1A1A1A"
+black     = "#000000"
 blue      = "#5c78ff"
 cyan      = "#5ac8ff"
 green     = "#905aff"
@@ -61,7 +61,7 @@ magenta   = "#5ea2ff"
 red       = "#ba5aff"
 white     = "#ffffff"
 yellow    = "#657b83"
-gray      = "#171717"
+gray      = "#696969"
 
 light-black   = "#666666"
 light-blue    = "#2b4fff"
@@ -71,4 +71,4 @@ light-magenta = "#2883ff"
 light-red     = "#a52aff"
 light-white   = "#f1f1f1"
 light-yellow  = "#3d2aff"
-light-gray    = "#1d1d1d"
+light-gray    = "#d4d4d4"
