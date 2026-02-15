@@ -19,7 +19,10 @@ if [ -f '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/home
 # The next line enables shell command completion for gcloud.
 if [ -f '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc'; fi
 
-$HOME/.local/bin/env
+# Load local environment
+if [[ -f "$HOME/.local/bin/env" ]]; then
+  source "$HOME/.local/bin/env"
+fi
 
 if [[ -n "$ZSH_PROFILE" ]]; then
   zprof

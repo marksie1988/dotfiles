@@ -21,6 +21,7 @@ log() {
 # Visual separator
 draw_line() {
   printf '%.s─' $(seq 1 $(tput cols))
+  echo
 }
 
 draw_line
