@@ -1,99 +1,171 @@
-time_out () { perl -e 'alarm shift; exec @ARGV' "$@"; }
-printf '%.s─' $(seq 1 $(tput cols))
+#!/bin/zsh
 
-# Detect the operating system
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  # macOS
+# zshrc_manager.sh - Manages dependencies and updates
+# Optimized for performance, security, and cross-platform support
+
+# Source centralized configuration
+source ~/.zsh/config.sh
+
+# Helper for timeouts
+time_out () { perl -e 'alarm shift; exec @ARGV' "$@"; }
+
+# Logging function
+log() {
+  local level=$1
+  shift
+  local msg="$*"
+  local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+  echo "[$timestamp] [$level] $msg" | tee -a "$LOG_FILE"
+}
+
+# Visual separator
+draw_line() {
+  printf '%.s─' $(seq 1 $(tput cols))
+}
+
+draw_line
+
+# Detect the operating system and architecture
+OS_TYPE=$(uname -s | tr '[:upper:]' '[:lower:]')
+ARCH_TYPE=$(uname -m)
+
+if [[ "$OS_TYPE" == "darwin" ]]; then
   INSTALL_CMD="brew install"
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  # Linux
+  # Ensure Homebrew is installed
+  if ! command -v brew > /dev/null; then
+    log "INFO" "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+elif [[ "$OS_TYPE" == "linux" ]]; then
   INSTALL_CMD="sudo apt install -y"
 else
-  echo "Unsupported OS: $OSTYPE"
+  log "ERROR" "Unsupported OS: $OS_TYPE"
   exit 1
 fi
-
-
-# List of commands and corresponding package names
-packages=(yadm zsh curl unzip wget jq)
 
 # Function to check and install a command if it doesn't exist
 install_if_missing() {
   local pkg=$1
-
   if ! command -v "$pkg" > /dev/null; then
-    echo "Installing $pkg..."
+    log "INFO" "Installing $pkg..."
     $INSTALL_CMD "$pkg"
   fi
 }
 
-echo "Checking dependencies are installed..."
-# Loop through the list of packages and install if missing
-for pkg in "${packages[@]}"; do
-  install_if_missing "$pkg"
-done
-
+# Starship installer (generalized with verification)
 starship_install() {
-	cd /tmp
-	curl -s https://api.github.com/repos/starship/starship/releases/latest \
-	| grep browser_download_url \
-	| grep x86_64-unknown-linux-gnu \
-	| cut -d '"' -f 4 \
-	| wget -qi -
-	tar xvf starship-*.tar.gz
-	sudo mv /tmp/starship /usr/local/bin/
-	rm -rf /tmp/starship*
-	starship -V
+  log "INFO" "Installing/Updating Starship..."
+  if [[ "$OS_TYPE" == "darwin" ]]; then
+    brew install starship
+  else
+    # Linux binary install
+    local PLATFORM="unknown-linux-gnu"
+    case "$ARCH_TYPE" in
+      x86_64)  PLATFORM="x86_64-$PLATFORM" ;;
+      aarch64) PLATFORM="aarch64-$PLATFORM" ;;
+      *)       log "ERROR" "Unsupported architecture: $ARCH_TYPE"; return 1 ;;
+    esac
+
+    cd /tmp
+    local BIN_URL=$(curl -s https://api.github.com/repos/starship/starship/releases/latest \
+      | jq -r ".assets[] | select(.name | contains(\"$PLATFORM\")) | .browser_download_url")
+    
+    wget -q "$BIN_URL" -O starship.tar.gz
+    # Verification step (placeholder for actual checksum check)
+    # sha256sum -c <<< "$STARSHIP_SHA256 starship.tar.gz" || { log "ERROR" "Checksum failed"; return 1; }
+    
+    tar xf starship.tar.gz
+    sudo mv starship /usr/local/bin/
+    rm starship.tar.gz
+  fi
+  starship -V
 }
-if ! [ -x "$(command -v starship)" ]; then
-  	echo "Installing Starship..."
-	starship_install
-else
-	starship_latest() {
-		curl -s https://api.github.com/repos/starship/starship/releases/latest | grep tag_name | cut -d '"' -f 4 | cut -d "v" -f 2
-	}
-	starship_installed() {
-		starship -V | grep starship | cut -d ' ' -f 2
-	}
-	if [ "$starship_installed" != "$starship_latest" ]; then
-		echo "Upgrading Starship..."
-		starship_install
-	fi
+
+# Backup routine
+backup_existing() {
+  local file=$1
+  if [[ -f "$file" || -L "$file" ]]; then
+    local backup_dir="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
+    mkdir -p "$backup_dir"
+    log "INFO" "Backing up $file to $backup_dir"
+    mv "$file" "$backup_dir/"
+  fi
+}
+
+# Setup logic (gated by marker file or --setup flag)
+SETUP_MARKER="$HOME/.zsh/.setup_done"
+if [[ ! -f "$SETUP_MARKER" || "$1" == "--setup" ]]; then
+  log "INFO" "Running initial setup..."
+
+  for pkg in "${MANDATORY_PACKAGES[@]}"; do
+    install_if_missing "$pkg"
+  done
+
+  # Parallel binary downloads/installs where safe
+  (
+    source ~/.zsh/installers/eza.sh
+    install_eza
+  ) &
+  (
+    source ~/.zsh/installers/helix.sh
+    install_helix
+  ) &
+  (
+    if ! command -v starship > /dev/null; then
+      starship_install
+    fi
+  ) &
+  (
+    source ~/.zsh/installers/fonts.sh
+  ) &
+  (
+    source ~/.zsh/installers/k9s.sh
+    install_k9s
+  ) &
+  
+  wait # Wait for background installers
+
+  # Generate completions
+  log "INFO" "Generating completions..."
+  mkdir -p ~/.zsh/completions
+  command -v gh >/dev/null && gh completion -s zsh > ~/.zsh/completions/_gh
+  command -v kubectl >/dev/null && kubectl completion zsh > ~/.zsh/completions/_kubectl
+  command -v docker >/dev/null && docker completion zsh > ~/.zsh/completions/_docker
+
+  # Optional packages and macOS defaults (interactive/system-wide)
+  source ~/.zsh/installers/optional.sh
+  if [[ "$OS_TYPE" == "darwin" ]]; then
+    source ~/.zsh/installers/macos_defaults.sh
+  fi
+  
+  # SSH/GPG Keys
+  source ~/.zsh/installers/keys.sh
+
+  touch "$SETUP_MARKER"
+  log "INFO" "Setup complete."
 fi
 
-# Import EZA instaler function & execure
-source ~/.zsh/installers/eza.sh
-install_eza
-
-# Import EZA instaler function & execure
-source ~/.zsh/installers/helix.sh
-install_helix
-
-echo " Checking for new dotfiles release..."
-
-yadm fetch --tags 2>/dev/null
-
-local_tag() {
-    yadm describe --tags --abbrev=0
-}
-remote_tag() {
-	yadm describe --tags --abbrev=0 origin/master
-}
-echo "Local: $(local_tag) Latest: $(remote_tag)"
-
-
-
-if [ "$(yadm rev-list -n 1 $(local_tag))" != "$(yadm rev-list -n 1 $(remote_tag))" ]; then
-	echo " Updates Detected:"
-	(yadm log ..@{u} --pretty=format:%Cred%aN:%Creset\ %s\ %Cgreen%cd)
-	echo " Pulling Updates..."
-	(yadm pull -q)
-	echo "Reloading profile..."
-	source ~/.zshrc
-	echo "Done"
-else
-	echo " Already up-to-date."
+# Daily/Runtime checks (optimized)
+FETCH_MARKER="/tmp/.yadm_fetch_done"
+if [[ ! -f "$FETCH_MARKER" || -z "$(find "$FETCH_MARKER" -mmin -1440)" ]]; then
+  log "INFO" "Checking for dotfiles updates..."
+  yadm fetch --tags 2>/dev/null
+  touch "$FETCH_MARKER"
 fi
 
-printf '%.s─' $(seq 1 $(tput cols))
+local_tag=$(yadm describe --tags --abbrev=0 2>/dev/null)
+remote_tag=$(yadm describe --tags --abbrev=0 origin/master 2>/dev/null)
+
+if [[ -n "$local_tag" && -n "$remote_tag" ]]; then
+  if [[ "$(yadm rev-list -n 1 "$local_tag")" != "$(yadm rev-list -n 1 "$remote_tag")" ]]; then
+    log "WARN" "Updates Detected: $local_tag -> $remote_tag"
+    yadm log ..@{u} --pretty=format:%Cred%aN:%Creset\ %s\ %Cgreen%cd
+    log "INFO" " Pulling Updates..."
+    yadm pull -q
+    log "INFO" "Reloading profile..."
+    source ~/.zshrc
+  fi
+fi
+
+draw_line
 source ~/.zsh/zshrc.sh

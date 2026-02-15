@@ -1,8 +1,30 @@
 # ~/.config/starship.toml
+# ~/.config/starship.toml
 
-add_newline = false
+add_newline = true
 command_timeout = 1000
-format = """$os$time$kubernetes$directory$git_branch$git_status"""
+
+format = """
+$os\
+$time\
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$helm\
+$terraform\
+$python\
+$lua\
+$nodejs\
+$golang\
+$rust\
+$package\
+$gcloud\
+$docker_context\
+$jobs\
+$cmd_duration\
+$line_break\
+$character"""
 
 # Drop ugly default prompt characters
 [character]
@@ -28,80 +50,104 @@ Macos = '󰀵'
 disabled = false
 format = '[$time]($style) '
 time_format = "%F %T" # You can also use other strftime format strings to customize.
-style = "bold yellow" # You can change the style of the timestamp.
+style = "bold #E0AF68" # Tokyo Night Yellow
 
-
-# Shows the username
-[username]
-style_user = 'white bold'
-style_root = 'black bold'
-format = '[$user]($style) '
-disabled = false
-show_always = true
-
-# Shows the hostname
-[hostname]
-ssh_only = false
-format = '[$hostname](bold yellow) '
-disabled = false
 
 # Shows current directory
 [directory]
-truncation_length = 1
+style = 'bold #7AA2F7' # Tokyo Night Blue
+truncation_length = 3
 truncation_symbol = '…/'
+truncate_to_repo = false
 home_symbol = '󰋜 ~'
-read_only_style = '197'
+read_only_style = '#F7768E' # Tokyo Night Red
 read_only = '  '
 format = '[$path]($style)[$read_only]($read_only_style) '
+
+[directory.substitutions]
+'Documents' = '󰈙'
+'Downloads' = ' '
+'Music' = ' '
+'Pictures' = ' '
 
 # Shows current git branch
 [git_branch]
 symbol = ' '
 format = '[$symbol$branch]($style)'
-# truncation_length = 4
-truncation_symbol = '…/'
-style = 'bold green'
+style = 'bold #73DACA' # Tokyo Night Green
 
 # Shows current git status
 [git_status]
 format = '[ \($all_status$ahead_behind\)]($style)'
-style = 'bold green'
-conflicted = '[ conf=${count}](red) '
-up_to_date = '[󰘽](green) '
-untracked = '[󰋗 unt=${count}](red) '
+style = 'bold #73DACA' # Tokyo Night Green
+conflicted = '[ conf=${count}](#F7768E) '
+up_to_date = '[󰘽](#73DACA) '
+untracked = '[󰋗 unt=${count}](#F7768E) '
 ahead = ' ${count}'
 diverged = ' ${ahead_count}  ${behind_count}'
 behind = ' ${count}'
-stashed = '[ stash=${count}](green) '
-modified = '[󰛿 mod=${count}](yellow) '
-staged = '[󰐗 sta=${count}](green) '
-renamed = '[󱍸 ren=${count}](yellow) '
-deleted = '[󰍶 del=${count}](red) '
+stashed = '[ stash=${count}](#73DACA) '
+modified = '[󰛿 mod=${count}](#E0AF68) '
+staged = '[󰐗 sta=${count}](#73DACA) '
+renamed = '[󱍸 ren=${count}](#E0AF68) '
+deleted = '[󰍶 del=${count}](#F7768E) '
+
+[fill]
+symbol = ' '
 
 # Shows kubernetes context and namespace
 [kubernetes]
-format = '[󱃾 $context\($namespace\)](bold purple) '
+format = '[󱃾 $context\($namespace\)](bold #BB9AF7) ' # Tokyo Night Magenta
 disabled = false
 
 # ---
 
-[vagrant]
-disabled = true
-
-[docker_context]
-disabled = true
-
 [helm]
-disabled = true
+symbol = ' '
+style = '#7AA2F7' # Tokyo Night Blue
+
 
 [python]
-disabled = true
+style = '#2ac3de' # Tokyo Night Teal
+symbol = ' '
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+pyenv_version_name = true
+pyenv_prefix = ''
+
 
 [nodejs]
-disabled = true
+style = '#7AA2F7' # Tokyo Night Blue
+symbol = ' '
 
-[ruby]
-disabled = true
+[golang]
+style = '#7AA2F7' # Tokyo Night Blue
+symbol = ' '
+
+[gcloud]
+style = ''
+symbol = '󱇶 '
+format = '[$symbol$account(\($region\))(\[$project\] )]($style)'
 
 [terraform]
-disabled = true
+symbol = ' '
+
+[package]
+symbol = '󰏗 '
+
+[docker_context]
+symbol = ' '
+style = 'fg:#06969A'
+format = '[$symbol]($style) $path'
+detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
+detect_extensions = ['Dockerfile']
+
+[jobs]
+symbol = ' '
+style = '#F7768E' # Tokyo Night Red
+number_threshold = 1
+format = '[$symbol]($style)'
+
+[cmd_duration]
+min_time = 500
+style = 'fg:#565f89' # Tokyo Night Comment/Gray
+format = '[$duration]($style)'
