@@ -148,24 +148,32 @@ fi
 
 # Daily/Runtime checks (optimized)
 FETCH_MARKER="/tmp/.yadm_fetch_done"
-if [[ ! -f "$FETCH_MARKER" || -z "$(find "$FETCH_MARKER" -mmin -1440)" ]]; then
+FORCE_UPDATE=false
+if [[ "$1" == "--force" || "$2" == "--force" ]]; then
+  FORCE_UPDATE=true
+fi
+
+local_tag=$(yadm describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+log "INFO" "Current Version: $local_tag"
+
+if [[ ! -f "$FETCH_MARKER" || -z "$(find "$FETCH_MARKER" -mmin -1440)" || "$FORCE_UPDATE" == true ]]; then
   log "INFO" "Checking for dotfiles updates..."
   yadm fetch --tags 2>/dev/null
   touch "$FETCH_MARKER"
 fi
 
-local_tag=$(yadm describe --tags --abbrev=0 2>/dev/null)
-remote_tag=$(yadm describe --tags --abbrev=0 origin/master 2>/dev/null)
+remote_tag=$(yadm describe --tags --abbrev=0 origin/master 2>/dev/null || echo "$local_tag")
 
-if [[ -n "$local_tag" && -n "$remote_tag" ]]; then
-  if [[ "$(yadm rev-list -n 1 "$local_tag")" != "$(yadm rev-list -n 1 "$remote_tag")" ]]; then
+if [[ "$FORCE_UPDATE" == true || ("$local_tag" != "$remote_tag" && -n "$remote_tag") ]]; then
+  if [[ "$local_tag" != "$remote_tag" ]]; then
     log "WARN" "Updates Detected: $local_tag -> $remote_tag"
     yadm log ..@{u} --pretty=format:%Cred%aN:%Creset\ %s\ %Cgreen%cd
-    log "INFO" " Pulling Updates..."
-    yadm pull -q
-    log "INFO" "Reloading profile..."
-    source ~/.zshrc
   fi
+  
+  log "INFO" " Pulling Updates..."
+  yadm pull -q
+  log "INFO" "Reloading profile..."
+  exec zsh
 fi
 
 draw_line
