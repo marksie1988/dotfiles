@@ -10,8 +10,8 @@ manage_plugin() {
         echo "Cloning $name..."
         git clone --depth 1 "$url" "$path" >/dev/null 2>&1
     else
-        # Background update
-        (git -C "$path" pull >/dev/null 2>&1 &)
+        # Background update (handled by caller)
+        git -C "$path" pull >/dev/null 2>&1
     fi
 }
 
@@ -26,10 +26,14 @@ plugin_urls=(
 )
 
 # Install/Update plugins in parallel
-for name in ${(k)plugin_urls}; do
-    manage_plugin "$name" "${plugin_urls[$name]}" &
-done
-wait
+(
+    unsetopt MONITOR
+    setopt NO_NOTIFY NO_CHECK_JOBS 2>/dev/null
+    for name in ${(k)plugin_urls}; do
+        manage_plugin "$name" "${plugin_urls[$name]}" &
+    done
+    wait
+)
 
 # Load plugins
 for name in ${(k)plugin_urls}; do

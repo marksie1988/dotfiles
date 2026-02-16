@@ -6,6 +6,11 @@
 # Source centralized configuration
 source ~/.zsh/config.sh
 
+# Terminal compatibility fallback
+if ! tput colors &>/dev/null; then
+  export TERM=xterm-256color
+fi
+
 # Helper for timeouts
 time_out () { perl -e 'alarm shift; exec @ARGV' "$@"; }
 
@@ -20,7 +25,8 @@ log() {
 
 # Visual separator
 draw_line() {
-  printf '%.s─' $(seq 1 $(tput cols))
+  local cols=$(tput cols 2>/dev/null || echo 80)
+  printf '%.s─' $(seq 1 $cols)
   echo
 }
 
@@ -104,27 +110,31 @@ if [[ ! -f "$SETUP_MARKER" || "$1" == "--setup" ]]; then
 
   # Parallel binary downloads/installs where safe
   (
-    source ~/.zsh/installers/eza.sh
-    install_eza
-  ) &
-  (
-    source ~/.zsh/installers/helix.sh
-    install_helix
-  ) &
-  (
-    if ! command -v starship > /dev/null; then
-      starship_install
-    fi
-  ) &
-  (
-    source ~/.zsh/installers/fonts.sh
-  ) &
-  (
-    source ~/.zsh/installers/k9s.sh
-    install_k9s
-  ) &
-  
-  wait # Wait for background installers
+    unsetopt MONITOR
+    setopt NO_NOTIFY NO_CHECK_JOBS 2>/dev/null
+    (
+      source ~/.zsh/installers/eza.sh
+      install_eza
+    ) &
+    (
+      source ~/.zsh/installers/helix.sh
+      install_helix
+    ) &
+    (
+      if ! command -v starship > /dev/null; then
+        starship_install
+      fi
+    ) &
+    (
+      source ~/.zsh/installers/fonts.sh
+    ) &
+    (
+      source ~/.zsh/installers/k9s.sh
+      install_k9s
+    ) &
+    
+    wait # Wait for background installers
+  )
 
   # Generate completions
   log "INFO" "Generating completions..."

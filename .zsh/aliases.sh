@@ -30,7 +30,7 @@ alias gum='git fetch upstream && git merge upstream/master'
 # Automtion
 alias k="kubectl"
 alias h="helm"
-alias tf="terraform"
+alias tf="tofu"
 alias a="ansible"
 alias ap="ansible-playbook"
 alias code="open -a 'Visual Studio Code'"
