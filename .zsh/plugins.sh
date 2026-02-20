@@ -22,7 +22,9 @@ manage_plugin() {
 typeset -A plugin_urls
 plugin_urls=(
     zsh-autosuggestions "https://github.com/zsh-users/zsh-autosuggestions"
-    zsh-syntax-highlighting "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    zsh-syntax-highlighting "https://github.com/zsh-users/zsh-syntax-highlighting"
+    zsh-you-should-use "https://github.com/MichaelAquilina/zsh-you-should-use"
+    zsh-abbr "https://github.com/olets/zsh-abbr"
 )
 
 # Install/Update plugins in parallel

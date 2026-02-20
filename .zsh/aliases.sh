@@ -14,8 +14,8 @@ alias -- -="cd -"
 alias g="git"
 alias gs='git status -s'
 alias gf='git fetch --prune'
-alias gpl='git pull'
-alias gplr='git pull --rebase'
+alias gp='git pull'
+alias gpr='git pull --rebase'
 alias gps='git push'
 alias gpsh='git push -u origin `git rev-parse --abbrev-ref HEAD`'
 alias gcb='git checkout -b'
@@ -31,11 +31,11 @@ alias gum='git fetch upstream && git merge upstream/master'
 alias k="kubectl"
 alias h="helm"
 alias tf="tofu"
+alias tfp="tofu plan"
+alias tfa="tofu apply"
 alias a="ansible"
 alias ap="ansible-playbook"
 alias code="open -a 'Visual Studio Code'"
-
-alias tg="terragrunt"
 
 # vim / nano alias
 alias vi="hx"
@@ -48,8 +48,8 @@ alias tree="eza --tree --icons"
 alias grep='grep --color'
 
 # IP Information
-alias pubip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en0"
+alias pip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias lip="ipconfig getifaddr en0"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
 # Print each PATH entry on a separate line
