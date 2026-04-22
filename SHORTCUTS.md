@@ -19,12 +19,13 @@ This document provides a comprehensive overview of the custom shortcuts, aliases
 - `gpsh`: Push current branch to origin.
 - `gcb`: `git checkout -b`
 - `grs`: `git reset`
-- `grsh`: `git reset --hard`
+- `gresethard`: `git reset --hard` (spelled out intentionally — destructive).
 - `gcm`: Stage all changes and commit with a message.
 - `undo`: Undo the last commit (mixed reset).
 - `gr`: `git remote -v`
 - `ssha`: Start ssh-agent and add keys.
 - `gum`: Fetch and merge from upstream master.
+- `lg`: `lazygit` (interactive TUI).
 
 ### Development & Tools
 - `k`: `kubectl`
@@ -50,8 +51,17 @@ This document provides a comprehensive overview of the custom shortcuts, aliases
 - `Ctrl + s`: Prepend `sudo` to the current command line.
 - `Ctrl + g`: Prepare a git commit (stages all, commits with buffer content or opens editor, and pushes).
 - `Ctrl + h`: Change directory to the git repository root.
-- `Up/Down Arrows`: Fuzzy history search.
+- `Up/Down Arrows`: Beginning-of-line history search.
+- `Ctrl + r`: atuin shell history search (replaces default Ctrl+r).
+- `Ctrl + t`: fzf file picker (insert a file path into the current command).
+- `Alt + c`: fzf cd-to-subdirectory.
 - `Home/End/Delete`: Standard line navigation and character deletion.
+
+## Shell Integrations
+
+- `cd <partial>`: zoxide-backed — jumps to most-frecent matching directory.
+- `direnv`: auto-loads `.envrc` on entering a directory.
+- `TMUX_AUTOSTART=1`: set in `~/.env.local` to auto-attach tmux on every shell.
 
 ## Zsh Functions
 

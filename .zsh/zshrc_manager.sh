@@ -59,31 +59,14 @@ install_if_missing() {
   fi
 }
 
-# Starship installer (generalized with verification)
+# Starship installer
 starship_install() {
   log "INFO" "Installing/Updating Starship..."
   if [[ "$OS_TYPE" == "darwin" ]]; then
     brew install starship
   else
-    # Linux binary install
-    local PLATFORM="unknown-linux-gnu"
-    case "$ARCH_TYPE" in
-      x86_64)  PLATFORM="x86_64-$PLATFORM" ;;
-      aarch64) PLATFORM="aarch64-$PLATFORM" ;;
-      *)       log "ERROR" "Unsupported architecture: $ARCH_TYPE"; return 1 ;;
-    esac
-
-    cd /tmp
-    local BIN_URL=$(curl -s https://api.github.com/repos/starship/starship/releases/latest \
-      | jq -r ".assets[] | select(.name | contains(\"$PLATFORM\")) | .browser_download_url")
-    
-    wget -q "$BIN_URL" -O starship.tar.gz
-    # Verification step (placeholder for actual checksum check)
-    # sha256sum -c <<< "$STARSHIP_SHA256 starship.tar.gz" || { log "ERROR" "Checksum failed"; return 1; }
-    
-    tar xf starship.tar.gz
-    sudo mv starship /usr/local/bin/
-    rm starship.tar.gz
+    mkdir -p "$HOME/.local/bin"
+    curl -sS https://starship.rs/install.sh | sh -s -- -y --bin-dir "$HOME/.local/bin"
   fi
   starship -V
 }
@@ -132,29 +115,52 @@ if [[ ! -f "$SETUP_MARKER" || "$1" == "--setup" ]]; then
       source ~/.zsh/installers/k9s.sh
       install_k9s
     ) &
-    
+    (
+      source ~/.zsh/installers/atuin.sh
+      install_atuin
+    ) &
+    (
+      source ~/.zsh/installers/zoxide.sh
+      install_zoxide
+    ) &
+    (
+      source ~/.zsh/installers/delta.sh
+      install_delta
+    ) &
+    (
+      source ~/.zsh/installers/lazygit.sh
+      install_lazygit
+    ) &
+    (
+      source ~/.zsh/installers/bat.sh
+      install_bat
+    ) &
+
     wait # Wait for background installers
   )
-
-  # Generate completions
-  log "INFO" "Generating completions..."
-  mkdir -p ~/.zsh/completions
-  command -v gh >/dev/null && gh completion -s zsh > ~/.zsh/completions/_gh
-  command -v kubectl >/dev/null && kubectl completion zsh > ~/.zsh/completions/_kubectl
-  command -v docker >/dev/null && docker completion zsh > ~/.zsh/completions/_docker
 
   # Optional packages and macOS defaults (interactive/system-wide)
   source ~/.zsh/installers/optional.sh
   if [[ "$OS_TYPE" == "darwin" ]]; then
     source ~/.zsh/installers/macos_defaults.sh
   fi
-  
+
   # SSH/GPG Keys
   source ~/.zsh/installers/keys.sh
 
   touch "$SETUP_MARKER"
   log "INFO" "Setup complete."
+  INITIAL_SETUP_JUST_RAN=1
 fi
+
+# Completions are (re)generated below alongside the daily yadm fetch, so they
+# refresh as tools are upgraded without paying the cost on every shell launch.
+regenerate_completions() {
+  mkdir -p ~/.zsh/completions
+  command -v gh >/dev/null      && gh completion -s zsh      > ~/.zsh/completions/_gh      2>/dev/null
+  command -v kubectl >/dev/null && kubectl completion zsh    > ~/.zsh/completions/_kubectl 2>/dev/null
+  command -v docker >/dev/null  && docker completion zsh     > ~/.zsh/completions/_docker  2>/dev/null
+}
 
 # Daily/Runtime checks (optimized)
 FETCH_MARKER="/tmp/.yadm_fetch_done"
@@ -166,9 +172,10 @@ fi
 local_tag=$(yadm describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
 log "INFO" "Current Version: $local_tag"
 
-if [[ ! -f "$FETCH_MARKER" || -z "$(find "$FETCH_MARKER" -mmin -1440)" || "$FORCE_UPDATE" == true ]]; then
+if [[ ! -f "$FETCH_MARKER" || -z "$(find "$FETCH_MARKER" -mmin -1440)" || "$FORCE_UPDATE" == true || "$INITIAL_SETUP_JUST_RAN" == "1" ]]; then
   log "INFO" "Checking for dotfiles updates..."
   yadm fetch --tags 2>/dev/null
+  regenerate_completions
   touch "$FETCH_MARKER"
 fi
 

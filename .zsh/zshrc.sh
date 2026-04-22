@@ -1,19 +1,11 @@
 # NVM lazy load
-if [ -s "$HOME/.nvm/nvm.sh" ]; then
+export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
   [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
   alias nvm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && nvm'
   alias node='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && node'
   alias npm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && npm'
 fi
-
-# Fix Interop Error that randomly occurs in vscode terminal when using WSL2
-fix_wsl2_interop() {
-    for i in $(pstree -np -s $$ | grep -o -E '[0-9]+'); do
-        if [[ -e "/run/WSL/${i}_interop" ]]; then
-            export WSL_INTEROP=/run/WSL/${i}_interop
-        fi
-    done
-}
 
 # Fix for arrow-key searching
 # start typing + [Up-Arrow] - fuzzy find history forward
@@ -34,8 +26,8 @@ fi
 #
 mkdir -p ~/.cache/zsh/
 HISTFILE=~/.cache/zsh/history
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=100000
+SAVEHIST=100000
 setopt inc_append_history # To save every command before it is executed
 setopt share_history # setopt inc_append_history
 
@@ -76,9 +68,22 @@ source ~/.zsh/plugins.sh
 #
 source ~/.zsh/exports.sh
 
+# fzf keybindings and completion
+# ---
+#
+[[ -f ~/.zsh/fzf.sh ]] && source ~/.zsh/fzf.sh
+
+# Shell integrations (atuin, zoxide, direnv)
+# ---
+#
+command -v atuin >/dev/null && eval "$(atuin init zsh --disable-up-arrow)"
+command -v zoxide >/dev/null && eval "$(zoxide init zsh --cmd cd)"
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"
+
 # Load Starship
 eval "$(starship init zsh)"
 
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+# Auto-attach tmux only when opted in via TMUX_AUTOSTART=1
+if [[ "$TMUX_AUTOSTART" == "1" ]] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   tmux attach || exec tmux
 fi

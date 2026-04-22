@@ -22,7 +22,7 @@ install_font() {
   fi
 
   echo "Downloading ${FONT_NAME} Nerd Font..."
-  cd /tmp
+  cd /tmp || return 1
   curl -fLo "$FONT_ZIP" "$FONT_URL"
   unzip -o "$FONT_ZIP" -d font_tmp
   

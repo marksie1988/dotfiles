@@ -11,12 +11,6 @@ bindkey "^g" git_prepare
 zle -N git_root
 bindkey "^h" git_root
 
-# Bind arrow keys
-bindkey '^[[A' vi-up-line-or-history
-bindkey '^[[B' vi-down-line-or-history
-bindkey '^[0C' vi-forward-char
-bindkey '^[0D' vi-backward-char
-
 # Bind home / end
 bindkey  "^[[H"   beginning-of-line
 bindkey  "^[[F"   end-of-line
@@ -26,5 +20,4 @@ bindkey  "^[[4~"   end-of-line
 # Bind Delete Key
 bindkey "^[[3~" delete-char
 
-bindkey '^[[A' up-line-or-search
-bindkey '^[[B' down-line-or-search
+# Arrow key history search is set up in zshrc.sh via terminfo

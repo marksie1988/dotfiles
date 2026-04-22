@@ -20,12 +20,13 @@ alias gps='git push'
 alias gpsh='git push -u origin `git rev-parse --abbrev-ref HEAD`'
 alias gcb='git checkout -b'
 alias grs='git reset'
-alias grsh='git reset --hard'
 alias gcm='git add -A && git commit -m'
 alias undo='git reset HEAD~1 --mixed'
+alias gresethard='git reset --hard'
 alias gr='git remote -v'
 alias ssha='eval $(ssh-agent) && ssh-add'
 alias gum='git fetch upstream && git merge upstream/master'
+alias lg='lazygit'
 
 # Automtion
 alias k="kubectl"

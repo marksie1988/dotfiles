@@ -8,6 +8,17 @@
 [core]
   excludesfile = ~/.gitignore
   editor = hx
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+  line-numbers = true
+  syntax-theme = Nord
+[merge]
+  conflictStyle = zdiff3
+[diff]
+  colorMoved = default
 [push]
   default = simple
 [color]
@@ -18,7 +29,7 @@
   grep = auto
   ui = auto
 [alias]
-  a = "!git status --short | peco | awk '{print $2}' | xargs git add"
+  a = "!git status --short | fzf -m | awk '{print $2}' | xargs git add"
   d = diff
   co = checkout
   ci = commit
@@ -30,15 +41,15 @@
   ba = branch -a
   bm = branch --merged
   bn = branch --no-merged
-  df = "!git hist | peco | awk '{print $2}' | xargs -I {} git diff {}^ {}"
+  df = "!git hist | fzf | awk '{print $2}' | xargs -I {} git diff {}^ {}"
   hist = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
   llog = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\" --date=relative
   open = "!hub browse"
   type = cat-file -t
   dump = cat-file -p
-  find = "!f() { git log --pretty=format:\"%h %cd [%cn] %s%d\" --date=relative -S'pretty' -S\"$@\" | peco | awk '{print $1}' | xargs -I {} git diff {}^ {}; }; f"
+  find = "!f() { git log --pretty=format:\"%h %cd [%cn] %s%d\" --date=relative -S\"$@\" | fzf | awk '{print $1}' | xargs -I {} git diff {}^ {}; }; f"
   # edit conflicted file on merge
-  edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
+  edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; ${EDITOR:-hx} `f`"
   # add conflicted file on merge
   add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
 
@@ -47,4 +58,3 @@
 
 [gpg]
   program = $(which gpg)
-  # program = /opt/homebrew/bin/gpg

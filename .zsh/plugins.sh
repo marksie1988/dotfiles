@@ -1,49 +1,22 @@
-autoload -U compinit
+autoload -Uz compinit
 
-# Parallel plugin management
-manage_plugin() {
-    local name=$1
-    local url=$2
-    local path=~/.zsh/plugins/$name
-    
-    if [ ! -d "$path" ]; then
-        echo "Cloning $name..."
-        git clone --depth 1 "$url" "$path" >/dev/null 2>&1
-    else
-        # Background update (handled by caller)
-        git -C "$path" pull >/dev/null 2>&1
-    fi
-}
+ANTIDOTE_DIR="${ZDOTDIR:-$HOME}/.zsh/antidote"
+PLUGINS_LIST="${ZDOTDIR:-$HOME}/.zsh/.zsh_plugins.txt"
+PLUGINS_CACHE="${ZDOTDIR:-$HOME}/.zsh/.zsh_plugins.zsh"
 
-# Define plugins
-# Using standard array for compatibility if associative arrays cause issues in some zsh versions
-# though associative arrays are standard in modern zsh.
-# The error "bad subscript" often occurs if the shell isn't in zsh mode or syntax is slightly off.
-typeset -A plugin_urls
-plugin_urls=(
-    zsh-autosuggestions "https://github.com/zsh-users/zsh-autosuggestions"
-    zsh-syntax-highlighting "https://github.com/zsh-users/zsh-syntax-highlighting"
-    zsh-you-should-use "https://github.com/MichaelAquilina/zsh-you-should-use"
-    zsh-abbr "https://github.com/olets/zsh-abbr"
-)
+# Bootstrap antidote on first run.
+if [[ ! -d "$ANTIDOTE_DIR" ]]; then
+  echo "Cloning antidote..."
+  git clone --depth 1 https://github.com/mattmc3/antidote "$ANTIDOTE_DIR" >/dev/null 2>&1
+fi
 
-# Install/Update plugins in parallel
-(
-    unsetopt MONITOR
-    setopt NO_NOTIFY NO_CHECK_JOBS 2>/dev/null
-    for name in ${(k)plugin_urls}; do
-        manage_plugin "$name" "${plugin_urls[$name]}" &
-    done
-    wait
-)
+source "$ANTIDOTE_DIR/antidote.zsh"
 
-# Load plugins
-for name in ${(k)plugin_urls}; do
-    plugin_path=~/.zsh/plugins/$name/$name.zsh
-    if [ -f "$plugin_path" ]; then
-        fpath=(~/.zsh/plugins/$name $fpath)
-        source "$plugin_path"
-    fi
-done
+# Rebuild the plugin bundle when the list changes.
+if [[ ! -f "$PLUGINS_CACHE" || "$PLUGINS_LIST" -nt "$PLUGINS_CACHE" ]]; then
+  antidote bundle <"$PLUGINS_LIST" >"$PLUGINS_CACHE"
+fi
+
+source "$PLUGINS_CACHE"
 
 compinit

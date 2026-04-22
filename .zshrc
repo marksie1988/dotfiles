@@ -4,6 +4,12 @@ if [[ -n "$ZSH_PROFILE" ]]; then
 fi
 
 # Load local environment variables
+# ~/.env.local is gitignored. Use it for machine-specific secrets / overrides, e.g.:
+#   export OPENAI_API_KEY=...
+#   export ANTHROPIC_API_KEY=...
+#   export GITHUB_TOKEN=...
+# Sourced early so later configs can read the values, but note that $PATH additions
+# from .zsh/exports.sh have not been applied yet at this point.
 if [[ -f ~/.env.local ]]; then
   source ~/.env.local
 fi

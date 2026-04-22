@@ -6,6 +6,8 @@
 *~
 .DS_Store
 .env.local
+.envrc
+.claude/settings.local.json
 *.sw[po]
 tags
 TAGS
