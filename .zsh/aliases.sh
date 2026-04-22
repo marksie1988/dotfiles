@@ -27,6 +27,8 @@ alias gr='git remote -v'
 alias ssha='eval $(ssh-agent) && ssh-add'
 alias gum='git fetch upstream && git merge upstream/master'
 alias lg='lazygit'
+# Force a dotfiles update check (bypasses the 24h fetch marker)
+alias dfup='rm -f /tmp/.yadm_fetch_done && exec zsh'
 
 # Automtion
 alias k="kubectl"

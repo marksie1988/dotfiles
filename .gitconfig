@@ -55,6 +55,3 @@
 
 [hub]
   protocol = https
-
-[gpg]
-  program = $(which gpg)

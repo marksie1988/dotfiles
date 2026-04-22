@@ -82,16 +82,17 @@ backup_existing() {
   fi
 }
 
-# Setup logic (gated by marker file or --setup flag)
-SETUP_MARKER="$HOME/.zsh/.setup_done"
-if [[ ! -f "$SETUP_MARKER" || "$1" == "--setup" ]]; then
-  log "INFO" "Running initial setup..."
+# Install / ensure all declared tools. Safe to re-run — every installer
+# short-circuits when its binary is already on PATH. Called on initial
+# setup AND after every successful dotfiles pull, so new tools added in
+# an upstream bump are picked up automatically.
+run_tool_installers() {
+  log "INFO" "Ensuring tools are installed..."
 
   for pkg in "${MANDATORY_PACKAGES[@]}"; do
     install_if_missing "$pkg"
   done
 
-  # Parallel binary downloads/installs where safe
   (
     unsetopt MONITOR
     setopt NO_NOTIFY NO_CHECK_JOBS 2>/dev/null
@@ -138,14 +139,20 @@ if [[ ! -f "$SETUP_MARKER" || "$1" == "--setup" ]]; then
 
     wait # Wait for background installers
   )
+}
 
-  # Optional packages and macOS defaults (interactive/system-wide)
+# Setup logic (gated by marker file or --setup flag)
+SETUP_MARKER="$HOME/.zsh/.setup_done"
+if [[ ! -f "$SETUP_MARKER" || "$1" == "--setup" ]]; then
+  log "INFO" "Running initial setup..."
+
+  run_tool_installers
+
+  # Interactive / host-wide pieces — only on first setup, not on every pull.
   source ~/.zsh/installers/optional.sh
   if [[ "$OS_TYPE" == "darwin" ]]; then
     source ~/.zsh/installers/macos_defaults.sh
   fi
-
-  # SSH/GPG Keys
   source ~/.zsh/installers/keys.sh
 
   touch "$SETUP_MARKER"
@@ -188,9 +195,15 @@ if [[ "$FORCE_UPDATE" == true || ("$local_tag" != "$remote_tag" && -n "$remote_t
   fi
   
   log "INFO" " Pulling Updates..."
-  yadm pull -q
-  log "INFO" "Reloading profile..."
-  exec zsh
+  if yadm pull -q; then
+    # Pick up any tools added in the pulled version before reloading.
+    run_tool_installers
+    log "INFO" "Reloading profile..."
+    exec zsh
+  else
+    log "ERROR" "yadm pull failed — staying in the current shell."
+    log "ERROR" "Resolve the conflict (yadm status / yadm stash), then: yadm pull && exec zsh"
+  fi
 fi
 
 draw_line
