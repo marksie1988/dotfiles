@@ -73,9 +73,10 @@ source ~/.zsh/exports.sh
 #
 [[ -f ~/.zsh/fzf.sh ]] && source ~/.zsh/fzf.sh
 
-# Shell integrations (atuin, zoxide, direnv)
+# Shell integrations (rbenv, atuin, zoxide, direnv)
 # ---
 #
+command -v rbenv >/dev/null && eval "$(rbenv init - zsh)"
 command -v atuin >/dev/null && eval "$(atuin init zsh --disable-up-arrow)"
 command -v zoxide >/dev/null && eval "$(zoxide init zsh --cmd cd)"
 command -v direnv >/dev/null && eval "$(direnv hook zsh)"
