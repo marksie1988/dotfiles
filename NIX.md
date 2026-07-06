@@ -38,7 +38,7 @@ edit a .nix file  →  darwin-rebuild switch  →  Nix builds a new "generation"
 
 ```
 flake.nix            The entry point. Declares inputs (nixpkgs, home-manager,
-                     nix-darwin, herdr) and two outputs:
+                     nix-darwin) and two outputs:
                        • darwinConfigurations."Stevens-MacBook-Pro"  (macOS)
                        • homeConfigurations."stevenmarks@linux"      (Linux/WSL2)
                      Both pull in the same home/ modules.
@@ -60,7 +60,9 @@ home/                Your user environment (home-manager), shared by mac + Linux
   tmux.nix             tmux config.
   vscode.nix           VS Code extensions.
   ghostty.nix          Ghostty terminal config.
+  neovim.nix           Neovim + build tools; config symlinked from config/nvim.
   npm-globals.nix      npm globals not in nixpkgs (gemini-cli).
+  herdr.nix            herdr on Linux (installer); macOS uses Homebrew.
 
 config/              Raw config files kept verbatim (starship.toml, k9s, helix,
                      bat, nvim), symlinked into place by home-manager.
@@ -71,8 +73,7 @@ setup/bootstrap.sh   First-run: installs Nix + Homebrew, runs the first switch.
 ### How the wiring works
 
 - `flake.nix` defines *what a machine is*: it combines `hosts/darwin.nix` (system)
-  with the `home/` modules (user), and passes a couple of values in
-  (`username`, the `herdr` package) via `extraSpecialArgs`.
+  with the `home/` modules (user), and passes `username` in via `extraSpecialArgs`.
 - Every file in `home/` is a **module**: a function `{ pkgs, ... }: { ... }` that
   returns configuration. `home/default.nix` lists them in `imports`, and
   home-manager **merges them all together**. Order doesn't matter; splitting into
@@ -129,10 +130,10 @@ Is it in nixpkgs? Check at <https://search.nixos.org/packages>. If yes, add its
 name to the list in `home/packages.nix`:
 
 ```nix
-home.packages = (with pkgs; [
+home.packages = with pkgs; [
   jq wget
   ncdu          # ← added
-]) ++ [ herdrPkg ];
+];
 ```
 
 ### Add an alias
@@ -209,9 +210,11 @@ darwin-rebuild --rollback     # jump back to the previous generation
 - **Homebrew `cleanup`** is set to `"none"` in `hosts/darwin.nix` so it won't touch
   casks you installed by hand. Set it to `"zap"` only if you want Nix to own 100%
   of your casks (it will uninstall anything not listed).
-- **herdr** is installed via Homebrew (`homebrew.brews` in `hosts/darwin.nix`) — its
-  Nix flake builds from source (Rust + Zig, no binary cache), so the prebuilt bottle
-  is much faster. macOS only; add it via the curl installer on Linux if needed.
+- **herdr** is cross-platform but installed differently per OS, because its Nix flake
+  builds from source (Rust + Zig, no binary cache) and is slow: **macOS** uses the fast
+  prebuilt Homebrew bottle (`homebrew.brews` in `hosts/darwin.nix`); **Linux** runs the
+  official installer via `home/herdr.nix` (prebuilt binary → `~/.local/bin`). Both track
+  "latest" rather than a pinned version.
 - **This repo is standalone.** It has no dependency on any private repo, so anyone
   can clone and build it.
 - **AI agent config is not managed here.** Claude/Gemini/Codex/Cursor instructions

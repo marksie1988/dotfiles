@@ -11,6 +11,7 @@
     ./vscode.nix
     ./ghostty.nix
     ./neovim.nix
+    ./herdr.nix
   ];
 
   # home.username / home.homeDirectory are set by the flake's shared module.

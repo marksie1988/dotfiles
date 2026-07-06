@@ -38,10 +38,24 @@
     brews = [
       "herdr" # agent multiplexer (https://herdr.dev)
     ];
+    # GUI apps only — CLI tools come from Nix (home/packages.nix), shared with
+    # Linux. Hack Nerd Font is NOT a cask here: it's provided by fonts.packages.
     casks = [
       "ghostty"
       "visual-studio-code"
-      "claude-code"
+      "1password"
+      "android-studio"
+      "angry-ip-scanner"
+      "dbeaver-community"
+      "displaylink"
+      "gcloud-cli"
+      "google-drive"
+      "inkscape"
+      "keybase"
+      "mqttx"
+      "warp"
+      # claude-code cask intentionally omitted: claude is installed via the
+      # official self-updating installer at ~/.local/bin/claude.
     ];
   };
 
