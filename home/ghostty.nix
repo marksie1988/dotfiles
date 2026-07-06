@@ -14,7 +14,7 @@
       # Translucent, blurred window (macOS)
       background-opacity = 0.8
       background-blur = 50
-      macos-titlebar-style = hidden
+      macos-titlebar-style = tabs
 
       cursor-style = block
       mouse-hide-while-typing = true
