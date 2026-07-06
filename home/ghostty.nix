@@ -6,11 +6,15 @@
   # home-manager module version.
   xdg.configFile."ghostty/config" = lib.mkIf config.dotfiles.apps.ghostty.enable {
     text = ''
-      # Tokyo Night — matches starship / tmux / fzf / k9s / helix
-      theme = tokyonight
+      theme = Rose Pine Moon
 
       font-family = Hack Nerd Font Mono
-      font-size = 13
+      font-size = 15
+
+      # Translucent, blurred window (macOS)
+      background-opacity = 0.8
+      background-blur = 50
+      macos-titlebar-style = hidden
 
       cursor-style = block
       mouse-hide-while-typing = true

@@ -7,20 +7,20 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true; # keybindings/completion; order-independent
-    # Tokyo Night palette (was FZF_DEFAULT_OPTS in .zsh/fzf.sh)
+    # Rose Pine Moon palette (was FZF_DEFAULT_OPTS in .zsh/fzf.sh)
     colors = {
-      "bg+" = "#283457";
-      "bg" = "#16161e";
-      "spinner" = "#ff9e64";
-      "hl" = "#7aa2f7";
-      "fg" = "#c0caf5";
-      "header" = "#7aa2f7";
-      "info" = "#e0af68";
-      "pointer" = "#ff9e64";
-      "marker" = "#ff9e64";
-      "fg+" = "#c0caf5";
-      "prompt" = "#7aa2f7";
-      "hl+" = "#7aa2f7";
+      "bg+" = "#44415a";
+      "bg" = "#232136";
+      "spinner" = "#ea9a97";
+      "hl" = "#3e8fb0";
+      "fg" = "#e0def4";
+      "header" = "#3e8fb0";
+      "info" = "#f6c177";
+      "pointer" = "#ea9a97";
+      "marker" = "#ea9a97";
+      "fg+" = "#e0def4";
+      "prompt" = "#3e8fb0";
+      "hl+" = "#3e8fb0";
     };
     defaultOptions = [
       "--height=40%"

@@ -50,17 +50,17 @@ Macos = '󰀵'
 disabled = false
 format = '[$time]($style) '
 time_format = "%F %T" # You can also use other strftime format strings to customize.
-style = "bold #E0AF68" # Tokyo Night Yellow
+style = "bold #f6c177" # Rose Pine gold
 
 
 # Shows current directory
 [directory]
-style = 'bold #7AA2F7' # Tokyo Night Blue
+style = 'bold #3e8fb0' # Rose Pine pine
 truncation_length = 3
 truncation_symbol = '…/'
 truncate_to_repo = false
 home_symbol = '󰋜 ~'
-read_only_style = '#F7768E' # Tokyo Night Red
+read_only_style = '#eb6f92' # Rose Pine love
 read_only = '  '
 format = '[$path]($style)[$read_only]($read_only_style) '
 
@@ -74,41 +74,41 @@ format = '[$path]($style)[$read_only]($read_only_style) '
 [git_branch]
 symbol = ' '
 format = '[$symbol$branch]($style)'
-style = 'bold #73DACA' # Tokyo Night Green
+style = 'bold #9ccfd8' # Rose Pine foam
 
 # Shows current git status
 [git_status]
 format = '[ \($all_status$ahead_behind\)]($style)'
-style = 'bold #73DACA' # Tokyo Night Green
-conflicted = '[ conf=${count}](#F7768E) '
-up_to_date = '[󰘽](#73DACA) '
-untracked = '[󰋗 unt=${count}](#F7768E) '
+style = 'bold #9ccfd8' # Rose Pine foam
+conflicted = '[ conf=${count}](#eb6f92) '
+up_to_date = '[󰘽](#9ccfd8) '
+untracked = '[󰋗 unt=${count}](#eb6f92) '
 ahead = ' ${count}'
 diverged = ' ${ahead_count}  ${behind_count}'
 behind = ' ${count}'
-stashed = '[ stash=${count}](#73DACA) '
-modified = '[󰛿 mod=${count}](#E0AF68) '
-staged = '[󰐗 sta=${count}](#73DACA) '
-renamed = '[󱍸 ren=${count}](#E0AF68) '
-deleted = '[󰍶 del=${count}](#F7768E) '
+stashed = '[ stash=${count}](#9ccfd8) '
+modified = '[󰛿 mod=${count}](#f6c177) '
+staged = '[󰐗 sta=${count}](#9ccfd8) '
+renamed = '[󱍸 ren=${count}](#f6c177) '
+deleted = '[󰍶 del=${count}](#eb6f92) '
 
 [fill]
 symbol = ' '
 
 # Shows kubernetes context and namespace
 [kubernetes]
-format = '[󱃾 $context\($namespace\)](bold #BB9AF7) ' # Tokyo Night Magenta
+format = '[󱃾 $context\($namespace\)](bold #c4a7e7) ' # Rose Pine iris
 disabled = false
 
 # ---
 
 [helm]
 symbol = ' '
-style = '#7AA2F7' # Tokyo Night Blue
+style = '#3e8fb0' # Rose Pine pine
 
 
 [python]
-style = '#2ac3de' # Tokyo Night Teal
+style = '#9ccfd8' # Rose Pine foam
 symbol = ' '
 format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
 pyenv_version_name = true
@@ -116,11 +116,11 @@ pyenv_prefix = ''
 
 
 [nodejs]
-style = '#7AA2F7' # Tokyo Night Blue
+style = '#3e8fb0' # Rose Pine pine
 symbol = ' '
 
 [golang]
-style = '#7AA2F7' # Tokyo Night Blue
+style = '#3e8fb0' # Rose Pine pine
 symbol = ' '
 
 [gcloud]
@@ -136,18 +136,18 @@ symbol = '󰏗 '
 
 [docker_context]
 symbol = ' '
-style = 'fg:#06969A'
+style = 'fg:#3e8fb0'
 format = '[$symbol]($style) $path'
 detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
 detect_extensions = ['Dockerfile']
 
 [jobs]
 symbol = ' '
-style = '#F7768E' # Tokyo Night Red
+style = '#eb6f92' # Rose Pine love
 number_threshold = 1
 format = '[$symbol]($style)'
 
 [cmd_duration]
 min_time = 500
-style = 'fg:#565f89' # Tokyo Night Comment/Gray
+style = 'fg:#6e6a86' # Rose Pine muted
 format = '[$duration]($style)'

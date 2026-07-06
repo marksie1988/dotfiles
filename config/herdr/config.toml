@@ -1,7 +1,7 @@
 onboarding = false
 
 [theme]
-name = "tokyo-night"
+name = "rose-pine"
 
 [keys]
 prefix = "ctrl+b"

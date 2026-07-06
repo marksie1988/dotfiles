@@ -244,11 +244,12 @@ require('lazy').setup({
     end,
   },
 
-  { -- colorscheme — Tokyo Night, matching the rest of the setup
-    'folke/tokyonight.nvim',
+  { -- colorscheme - Rose Pine Moon, matching the rest of the setup
+    'rose-pine/neovim',
+    name = 'rose-pine',
     priority = 1000,
     init = function()
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'rose-pine-moon'
     end,
   },
 

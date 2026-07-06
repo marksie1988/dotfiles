@@ -8,7 +8,7 @@
     historyLimit = 64096;
     escapeTime = 10;
 
-    # Remaining .tmux.conf verbatim (Tokyo Night theme + custom bindings).
+    # Remaining .tmux.conf verbatim (Rose Pine Moon theme + custom bindings).
     extraConfig = ''
       set -ga terminal-overrides ",xterm-256color:Tc"
       set-option -g repeat-time 0
@@ -40,29 +40,29 @@
 
       set-option -g status-justify "left"
 
-      # look'n feel — Tokyo Night
-      set-option -g status-fg "#7DCFFF"
-      set-option -g status-bg "#24283B"
-      set -g pane-active-border-style fg="#ff9e64",bg=default
-      set -g window-style fg="#A9B1DC",bg=default
-      set -g window-active-style fg="#7AA2F7",bg=default
+      # look'n feel - Rose Pine Moon
+      set-option -g status-fg "#9ccfd8"
+      set-option -g status-bg "#2a273f"
+      set -g pane-active-border-style fg="#ea9a97",bg=default
+      set -g window-style fg="#908caa",bg=default
+      set -g window-active-style fg="#3e8fb0",bg=default
 
       # default statusbar colors
-      set-option -g status-style bg="#24283B",fg="#E0AF68",default
+      set-option -g status-style bg="#2a273f",fg="#f6c177",default
       # default window title colors
-      set-window-option -g window-status-style fg="#565f89",bg="#16161e",dim
+      set-window-option -g window-status-style fg="#6e6a86",bg="#232136",dim
       # active window title colors
-      set-window-option -g window-status-current-style fg="#ff9e64",bg=default,bright
+      set-window-option -g window-status-current-style fg="#ea9a97",bg=default,bright
       # pane border
-      set-option -g pane-border-style fg="#24283B"
-      set-option -g pane-active-border-style fg="#E0AF68",bg="#24283B"
+      set-option -g pane-border-style fg="#2a273f"
+      set-option -g pane-active-border-style fg="#f6c177",bg="#2a273f"
       # message text
-      set-option -g message-style bg="#24283B",fg="#ff9e64"
+      set-option -g message-style bg="#2a273f",fg="#ea9a97"
       # pane number display
-      set-option -g display-panes-active-colour "#7AA2F7"
-      set-option -g display-panes-colour "#ff9e64"
+      set-option -g display-panes-active-colour "#3e8fb0"
+      set-option -g display-panes-colour "#ea9a97"
       # clock
-      set-window-option -g clock-mode-colour "#73DACA"
+      set-window-option -g clock-mode-colour "#9ccfd8"
 
       # allow the title bar to adapt to whatever host you connect to
       set -g set-titles on
