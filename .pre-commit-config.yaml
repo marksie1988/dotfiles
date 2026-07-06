@@ -1,25 +1,38 @@
 repos:
+  # Shell (bootstrap script) — bash.
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.10.0.1
     hooks:
       - id: shellcheck
-        args:
-          - --shell=bash
-          - --severity=warning
-          - --exclude=SC1071,SC2034,SC2086,SC2155,SC1090,SC1091,SC2016,SC2154,SC2296,SC2298,SC1083
-        files: ^\.zsh/(.*\.sh|installers/.*\.sh)$
+        args: [--severity=warning]
+        files: ^setup/.*\.sh$
 
   - repo: https://github.com/scop/pre-commit-shfmt
     rev: v3.8.0-1
     hooks:
       - id: shfmt
         args: [-i, "2", -ci, -w]
-        files: ^\.zsh/(.*\.sh|installers/.*\.sh)$
+        files: ^setup/.*\.sh$
 
+  # Nix — formatting + linting. These require the tools on PATH; they are in
+  # home.packages (nixfmt-rfc-style, statix, deadnix) after the first switch.
   - repo: local
     hooks:
-      - id: zsh-syntax-check
-        name: zsh -n
-        entry: zsh -n
+      - id: nixfmt
+        name: nixfmt
+        entry: nixfmt
         language: system
-        files: ^\.zsh/(.*\.sh|installers/.*\.sh)$
+        files: \.nix$
+
+      - id: deadnix
+        name: deadnix
+        entry: deadnix --fail
+        language: system
+        files: \.nix$
+
+      - id: statix
+        name: statix
+        entry: statix check
+        language: system
+        pass_filenames: false
+        files: \.nix$
