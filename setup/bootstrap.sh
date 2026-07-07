@@ -88,6 +88,20 @@ case "$os" in
     ;;
 esac
 
+# 4. Make zsh the login shell. home-manager manages the zsh *config*, but as a
+#    standalone install it can't touch /etc/passwd — that's a chsh (prompts for
+#    your password). Prefer the Nix-provided zsh; fall back to a system one.
+desired_shell="${HOME}/.nix-profile/bin/zsh"
+[ -x "$desired_shell" ] || desired_shell="$(command -v zsh 2>/dev/null || true)"
+if [ -n "$desired_shell" ] && [ "$(basename "${SHELL:-}")" != "zsh" ]; then
+  log "Setting login shell to zsh (${desired_shell})..."
+  if ! grep -qxF "$desired_shell" /etc/shells 2>/dev/null; then
+    echo "$desired_shell" | sudo tee -a /etc/shells >/dev/null
+  fi
+  chsh -s "$desired_shell" || err "chsh failed — run 'chsh -s ${desired_shell}' yourself."
+  log "Login shell set. Open a new terminal (or log out/in) to use it."
+fi
+
 log "Done."
 log "SSH/GPG keys are not managed by Nix — generate them once if needed:"
 log "  ssh-keygen -t ed25519 -C \"\$(git config user.email)\""

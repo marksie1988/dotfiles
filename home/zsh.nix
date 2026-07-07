@@ -4,7 +4,7 @@ let
   # to the live path so working-tree edits are picked up without re-locking.
   baseOverride =
     if config.dotfiles.baseFlakePath != null then
-      '' --override-input dotfiles "path:${config.dotfiles.baseFlakePath}"''
+      ''--override-input dotfiles "path:${config.dotfiles.baseFlakePath}"''
     else
       "";
 in
