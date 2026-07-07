@@ -16,6 +16,5 @@
   # its lazy-lock.json back into the repo. Costs reproducibility/rollback for nvim
   # and hardwires the repo path — acceptable for a config hacked on constantly.
   xdg.configFile."nvim".source =
-    config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/repos/personal/dotfiles/config/nvim";
+    config.lib.file.mkOutOfStoreSymlink "${config.dotfiles.repoPath}/config/nvim";
 }

@@ -7,11 +7,21 @@
   #   dotfiles.apps.vscode.enable = false;
   # ─────────────────────────────────────────────────────────────────────────
   options.dotfiles = {
-    # Flake the `dfup` helper rebuilds from. Defaults to this (public) repo;
-    # a private overlay points it at the overlay flake instead.
+    # Filesystem path to this dotfiles working tree. Used as the default flakeRef
+    # (below) and for the live out-of-store nvim symlink (home/neovim.nix).
+    # Defaults to ~/repos/dotfiles — override here (or per-machine in a host
+    # module) if you cloned the repo somewhere else.
+    repoPath = lib.mkOption {
+      type = lib.types.str;
+      default = "${config.home.homeDirectory}/repos/dotfiles";
+      description = "Filesystem path to this dotfiles working tree.";
+    };
+
+    # Flake the `dfup` helper rebuilds from. Defaults to this (public) repo at
+    # repoPath; a private overlay points it at the overlay flake instead.
     flakeRef = lib.mkOption {
       type = lib.types.str;
-      default = "${config.home.homeDirectory}/repos/personal/dotfiles";
+      default = config.dotfiles.repoPath;
       description = "Path/flake-ref that `dfup` rebuilds from.";
     };
 

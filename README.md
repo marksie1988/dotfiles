@@ -16,14 +16,22 @@ both platforms; macOS-only bits (system defaults, casks, fonts) live in `hosts/d
 ## Install (fresh machine)
 
 ```sh
-git clone https://github.com/marksie1988/dotfiles.git ~/repos/personal/dotfiles
-cd ~/repos/personal/dotfiles
+git clone https://github.com/marksie1988/dotfiles.git ~/repos/dotfiles
+cd ~/repos/dotfiles
 ./setup/bootstrap.sh
 ```
 
-`bootstrap.sh` installs Nix (Determinate Systems installer, flakes enabled), installs
-Homebrew on macOS, and runs the first activation. SSH/GPG keys are **not** managed by
-Nix — generate them once if needed (the script prints the commands).
+`bootstrap.sh` installs Nix (Determinate Systems installer, flakes enabled) — or, if
+Nix is already present from a distro package, enables flakes and starts the daemon —
+installs Homebrew on macOS, and runs the first activation. SSH/GPG keys are **not**
+managed by Nix — generate them once if needed (the script prints the commands).
+
+The clone location isn't fixed: `bootstrap.sh` builds from wherever you cloned. If
+that's **not** `~/repos/dotfiles`, set `dotfiles.repoPath` (see [`home/options.nix`](./home/options.nix))
+so the `dfup` helper and the live Neovim config symlink point at the right place.
+
+Your username is auto-detected from `$USER` (which is why the commands below pass
+`--impure`), so nothing in the flake is hardcoded to a specific account.
 
 ## Daily use
 
@@ -31,8 +39,8 @@ The update model is explicit and reproducible (no more on-shell-launch auto-pull
 
 ```sh
 # Apply local changes to the flake:
-darwin-rebuild switch --flake ~/repos/personal/dotfiles#Stevens-MacBook-Pro   # macOS
-home-manager switch  --flake ~/repos/personal/dotfiles#stevenmarks@linux      # Linux/WSL2
+darwin-rebuild switch --impure --flake ~/repos/dotfiles#Stevens-MacBook-Pro   # macOS
+home-manager switch  --impure --flake ~/repos/dotfiles#linux                  # Linux/WSL2
 
 # Both are wrapped in the `dfup` shell function.
 
@@ -76,7 +84,7 @@ export TMUX_AUTOSTART=1   # opt in to tmux auto-attach
 
 ```sh
 nix flake check                                                   # evaluate all outputs
-darwin-rebuild build --flake .#Stevens-MacBook-Pro               # build WITHOUT activating
+darwin-rebuild build --impure --flake .#Stevens-MacBook-Pro       # build WITHOUT activating
 nix fmt                                                           # format all .nix files
 pre-commit run --all-files                                       # nixfmt + statix + deadnix + shellcheck
 ```

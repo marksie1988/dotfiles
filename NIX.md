@@ -40,7 +40,8 @@ edit a .nix file  →  darwin-rebuild switch  →  Nix builds a new "generation"
 flake.nix            The entry point. Declares inputs (nixpkgs, home-manager,
                      nix-darwin) and two outputs:
                        • darwinConfigurations."Stevens-MacBook-Pro"  (macOS)
-                       • homeConfigurations."stevenmarks@linux"      (Linux/WSL2)
+                       • homeConfigurations."linux"                  (Linux/WSL2)
+                     The user is auto-detected from $USER (eval with --impure).
                      Both pull in the same home/ modules.
 
 flake.lock           Auto-generated. The exact pinned versions of every input.
@@ -116,13 +117,15 @@ If you add shell to `zsh.nix` and a `${VAR}` should reach the shell, write it as
 After **any** change, apply it with:
 
 ```sh
-dfup          # shorthand for: darwin-rebuild switch --flake ~/repos/personal/dotfiles#Stevens-MacBook-Pro
+dfup          # macOS: darwin-rebuild switch --impure --flake ~/repos/dotfiles#Stevens-MacBook-Pro
+              # Linux: home-manager  switch --impure --flake ~/repos/dotfiles#linux
 ```
 
 Test first without touching your system:
 
 ```sh
-darwin-rebuild build --flake .#Stevens-MacBook-Pro   # builds; activates nothing
+darwin-rebuild build --impure --flake .#Stevens-MacBook-Pro   # macOS: builds; activates nothing
+home-manager   build --impure --flake .#linux                 # Linux: builds; activates nothing
 ```
 
 ### Add a CLI tool
@@ -235,9 +238,9 @@ dotfiles-priv/flake.nix   inputs.dotfiles = this repo (local path)
 ```
 
 - **Servers / other people** build this public flake directly
-  (`home-manager switch --flake …#stevenmarks@linux`). No private content, no secrets.
+  (`home-manager switch --impure --flake …#linux`). No private content, no secrets.
 - **Your local Macs** build the private overlay flake
-  (`darwin-rebuild switch --flake ~/repos/personal/dotfiles-priv#Stevens-MacBook-Pro`).
+  (`darwin-rebuild switch --impure --flake ~/repos/dotfiles-priv#Stevens-MacBook-Pro`).
   It layers on the SSH client config (`~/.ssh/config`, internal hosts) and repoints
   `dfup` here via `dotfiles.flakeRef`.
 - **AI agent config** is a third, separate private repo (`dotfiles-agents`),

@@ -12,8 +12,8 @@
 set -euo pipefail
 
 FLAKE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-HOST="Stevens-MacBook-Pro"        # matches darwinConfigurations.<host> in flake.nix
-LINUX_TARGET="stevenmarks@linux"  # matches homeConfigurations.<name> in flake.nix
+HOST="Stevens-MacBook-Pro"  # matches darwinConfigurations.<host> in flake.nix
+LINUX_TARGET="linux"        # matches homeConfigurations.<name> in flake.nix
 
 log() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
 err() { printf '\033[1;31merror:\033[0m %s\n' "$*" >&2; }
@@ -34,6 +34,27 @@ else
   log "Nix already installed: $(nix --version)"
 fi
 
+# 1b. Ensure flakes are usable and (on Linux multi-user installs) the daemon is
+#     running. The Determinate installer sets both up; a distro-packaged Nix
+#     (e.g. the Arch/CachyOS `nix` package) does not, so wire them up here.
+if ! nix flake --help >/dev/null 2>&1 || ! grep -qrs 'experimental-features.*flakes' /etc/nix ~/.config/nix; then
+  log "Enabling flakes for this user (~/.config/nix/nix.conf)..."
+  mkdir -p ~/.config/nix
+  if ! grep -qs 'experimental-features' ~/.config/nix/nix.conf 2>/dev/null; then
+    printf 'experimental-features = nix-command flakes\n' >>~/.config/nix/nix.conf
+  fi
+fi
+
+if [ "$os" = "Linux" ] && [ ! -d /nix/store ]; then
+  if command -v systemctl >/dev/null 2>&1; then
+    log "Initialising the Nix daemon (needs sudo)..."
+    sudo systemctl enable --now nix-daemon.socket
+  else
+    err "/nix/store missing and no systemctl found — start the nix daemon manually, then re-run."
+    exit 1
+  fi
+fi
+
 # 2. On macOS, ensure Homebrew exists (nix-darwin manages casks declaratively
 #    but does not install Homebrew itself).
 if [ "$os" = "Darwin" ] && ! command -v brew >/dev/null 2>&1; then
@@ -50,16 +71,16 @@ case "$os" in
   Darwin)
     if command -v darwin-rebuild >/dev/null 2>&1; then
       log "Rebuilding nix-darwin (.#$HOST)..."
-      darwin-rebuild switch --flake "${FLAKE_DIR}#${HOST}"
+      darwin-rebuild switch --impure --flake "${FLAKE_DIR}#${HOST}"
     else
       log "First nix-darwin activation (.#$HOST)..."
-      nix run nix-darwin -- switch --flake "${FLAKE_DIR}#${HOST}"
+      nix run nix-darwin -- switch --impure --flake "${FLAKE_DIR}#${HOST}"
     fi
     ;;
   Linux)
     log "Activating home-manager (.#$LINUX_TARGET)..."
     # -b bak backs up any pre-existing files instead of failing the first switch.
-    nix run home-manager/master -- switch -b bak --flake "${FLAKE_DIR}#${LINUX_TARGET}"
+    nix run home-manager/master -- switch -b bak --impure --flake "${FLAKE_DIR}#${LINUX_TARGET}"
     ;;
   *)
     err "Unsupported OS: $os"

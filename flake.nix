@@ -23,9 +23,14 @@
       home-manager,
     }:
     let
-      # Identity — edit these when cloning onto a new machine.
-      username = "stevenmarks";
-      # Full name / email live in home/git.nix.
+      # Identity is auto-detected from the environment so this flake works on any
+      # machine / for any user without editing. `$USER` and `$HOME` are read with
+      # builtins.getEnv, which only returns real values under `--impure` eval — the
+      # `dfup` helper and setup/bootstrap.sh pass `--impure` for you. Under pure
+      # eval (e.g. CI's `nix flake check`) getEnv returns "", so we fall back to a
+      # sane default. Full name / email live in home/git.nix.
+      envUser = builtins.getEnv "USER";
+      username = if envUser != "" then envUser else "stevenmarks";
 
       # home-manager module shared by every platform. Machine-specific bits
       # (macOS defaults, Homebrew casks) live in hosts/*, not here.
@@ -34,7 +39,15 @@
         {
           home.username = username;
           home.homeDirectory =
-            if pkgs.stdenv.isDarwin then "/Users/${username}" else "/home/${username}";
+            let
+              envHome = builtins.getEnv "HOME";
+            in
+            if envHome != "" then
+              envHome
+            else if pkgs.stdenv.isDarwin then
+              "/Users/${username}"
+            else
+              "/home/${username}";
           imports = [ ./home ];
         };
 
@@ -68,8 +81,10 @@
       };
 
       # Linux / WSL2: standalone home-manager on top of the existing distro.
-      # Build with: home-manager switch --flake .#stevenmarks@linux
-      homeConfigurations."${username}@linux" = home-manager.lib.homeManagerConfiguration {
+      # Named generically (not per-user) so the command is identical on every
+      # machine — the actual user is auto-detected (see `username` above).
+      # Build with: home-manager switch --impure --flake .#linux
+      homeConfigurations."linux" = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
           system = "x86_64-linux";
           config.allowUnfree = true;

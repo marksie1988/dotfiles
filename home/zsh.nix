@@ -120,9 +120,9 @@ in
       dfup() {
         local flake="${config.dotfiles.flakeRef}"
         if command -v darwin-rebuild >/dev/null 2>&1; then
-          darwin-rebuild switch --flake "$flake#Stevens-MacBook-Pro"${baseOverride}
+          darwin-rebuild switch --impure --flake "$flake#Stevens-MacBook-Pro"${baseOverride}
         else
-          home-manager switch --flake "$flake#stevenmarks@linux"
+          home-manager switch --impure --flake "$flake#linux"
         fi
       }
 
