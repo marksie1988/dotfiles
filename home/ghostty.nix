@@ -13,6 +13,20 @@
     pkgs.ghostty
   ];
 
+  # Non-NixOS desktops (KDE, GNOME, …) only scan ~/.local/share and the system
+  # dirs for app launchers — not the Nix profile — so a Nix-installed GUI app
+  # never shows up in the menu. Mirror ghostty's .desktop entry + icons into
+  # ~/.local/share here. The entry's Exec is an absolute /nix/store path, so it
+  # launches without ghostty being on the graphical session's PATH.
+  xdg.dataFile = lib.mkIf (config.dotfiles.apps.ghostty.enable && pkgs.stdenv.isLinux) {
+    "applications/com.mitchellh.ghostty.desktop".source =
+      "${pkgs.ghostty}/share/applications/com.mitchellh.ghostty.desktop";
+    "icons/hicolor/128x128/apps/com.mitchellh.ghostty.png".source =
+      "${pkgs.ghostty}/share/icons/hicolor/128x128/apps/com.mitchellh.ghostty.png";
+    "icons/hicolor/256x256/apps/com.mitchellh.ghostty.png".source =
+      "${pkgs.ghostty}/share/icons/hicolor/256x256/apps/com.mitchellh.ghostty.png";
+  };
+
   # Written as a raw file so it's independent of any home-manager module version.
   xdg.configFile."ghostty/config" = lib.mkIf config.dotfiles.apps.ghostty.enable {
     text = ''
