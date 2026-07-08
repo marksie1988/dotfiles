@@ -44,7 +44,23 @@ if [[ "$OS_TYPE" == "darwin" ]]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
 elif [[ "$OS_TYPE" == "linux" ]]; then
-  INSTALL_CMD="sudo apt install -y"
+  # Detect the distro's package manager so Arch-family (CachyOS, Manjaro, Arch),
+  # Debian/Ubuntu and Fedora are all first-class. Exported so per-tool installers
+  # can branch without re-detecting.
+  if command -v pacman > /dev/null; then
+    PKG_MANAGER="pacman"
+    INSTALL_CMD="sudo pacman -S --needed --noconfirm"
+  elif command -v apt > /dev/null; then
+    PKG_MANAGER="apt"
+    INSTALL_CMD="sudo apt install -y"
+  elif command -v dnf > /dev/null; then
+    PKG_MANAGER="dnf"
+    INSTALL_CMD="sudo dnf install -y"
+  else
+    log "ERROR" "No supported package manager (pacman/apt/dnf) found"
+    exit 1
+  fi
+  export PKG_MANAGER
 else
   log "ERROR" "Unsupported OS: $OS_TYPE"
   exit 1
@@ -135,6 +151,18 @@ run_tool_installers() {
     (
       source ~/.zsh/installers/bat.sh
       install_bat
+    ) &
+    (
+      source ~/.zsh/installers/neovim.sh
+      install_neovim
+    ) &
+    (
+      source ~/.zsh/installers/herdr.sh
+      install_herdr
+    ) &
+    (
+      source ~/.zsh/installers/claude-code.sh
+      install_claude_code
     ) &
 
     wait # Wait for background installers

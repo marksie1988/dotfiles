@@ -1,0 +1,121 @@
+foreground: &foreground "#e0def4"
+background: &background "#2a273f"
+background_highlight: &background_highlight "#393552"
+current_line: &current_line "#f6c177"
+selection: &selection "#56526e"
+comment: &comment "#908caa"
+cyan: &cyan "#9ccfd8"
+green: &green "#3e8fb0"
+yellow: &yellow "#f6c177"
+orange: &orange "#ea9a97"
+magenta: &magenta "#c4a7e7"
+pink: &pink "#eb6f92"
+blue: &blue "#9ccfd8"
+red: &red "#eb6f92"
+white: &white "#e0def4"
+
+k9s:
+  # General K9s styles
+  body:
+    fgColor: *foreground
+    bgColor: default
+    logoColor: *orange
+  # Command prompt styles
+  prompt:
+    fgColor: *foreground
+    bgColor: *background
+    suggestColor: *orange
+  # ClusterInfoView styles.
+  info:
+    fgColor: *orange
+    sectionColor: *foreground
+  # Dialog styles.
+  dialog:
+    fgColor: *foreground
+    bgColor: default
+    buttonFgColor: *foreground
+    buttonBgColor: *green
+    buttonFocusFgColor: *background
+    buttonFocusBgColor: *foreground
+    labelFgColor: *comment
+    fieldFgColor: *foreground
+  frame:
+    # Borders styles.
+    border:
+      fgColor: *selection
+      focusColor: *foreground
+    menu:
+      fgColor: *foreground
+      keyColor: *blue
+      # Used for favorite namespaces
+      numKeyColor: *blue
+    # CrumbView attributes for history navigation.
+    crumbs:
+      fgColor: *white
+      bgColor: *cyan
+      activeColor: *yellow
+    # Resource status and update styles
+    status:
+      newColor: *blue
+      modifyColor: *yellow
+      addColor: *white
+      errorColor: *red
+      highlightcolor: *orange
+      killColor: *magenta
+      completedColor: *comment
+    # Border title styles.
+    title:
+      fgColor: *foreground
+      bgColor: default
+      highlightColor: *blue
+      counterColor: *green
+      filterColor: *magenta
+  views:
+    # Charts skins...
+    charts:
+      bgColor: default
+      defaultDialColors:
+        - *blue
+        - *red
+      defaultChartColors:
+        - *blue
+        - *red
+    # TableView attributes.
+    table:
+      fgColor: *foreground
+      bgColor: default
+      cursorFgColor: *white
+      cursorBgColor: *background_highlight
+      markColor: *pink
+      # Header row styles.
+      header:
+        fgColor: *foreground
+        bgColor: default
+        sorterColor: *cyan
+    # Xray view attributes.
+    xray:
+      fgColor: *foreground
+      bgColor: default
+      cursorColor: *current_line
+      graphicColor: *blue
+      showIcons: false
+    # YAML info styles.
+    yaml:
+      keyColor: *green
+      colonColor: *blue
+      valueColor: *foreground
+    # Logs styles.
+    logs:
+      fgColor: *foreground
+      bgColor: default
+      indicator:
+        fgColor: *foreground
+        bgColor: *background_highlight
+        toggleOnColor: *cyan
+        toggleOffColor: *foreground
+    help:
+      fgColor: *foreground
+      bgColor: default
+      indicator:
+        fgColor: *red
+        bgColor: default

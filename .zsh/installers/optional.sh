@@ -26,9 +26,9 @@ elif [[ -n "$DISPLAY" || -n "$WAYLAND_DISPLAY" ]]; then
   HAS_GUI=true
 fi
 
-# Ghostty (GUI gated)
+# Ghostty (GUI gated) — cross-platform installer (brew cask / pacman / COPR)
 if [[ "$HAS_GUI" == "true" ]]; then
-  prompt_install "Ghostty" "ghostty" "brew install --cask ghostty"
+  prompt_install "Ghostty" "ghostty" "source ~/.zsh/installers/ghostty.sh && install_ghostty"
 fi
 
 # VS Code (GUI gated)

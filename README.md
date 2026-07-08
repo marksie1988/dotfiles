@@ -41,9 +41,12 @@ Daily runs check for upstream dotfile updates via `yadm fetch --tags` at most on
 | `.zsh/` | Modular shell config: aliases, functions, exports, plugins, keybindings. |
 | `.zsh/installers/` | Per-tool install scripts. Follow the `install_<tool>` function pattern. |
 | `.gitconfig` | Git config, delta diff rendering, fzf-backed aliases (`git a`, `git df`, `git find`). |
-| `.tmux.conf` | tmux config, Tokyo Night theme, prefix `Ctrl+t`. |
+| `.tmux.conf` | tmux config, Rose Pine Moon theme, prefix `Ctrl+t`. |
 | `.config/helix/` | Helix editor config. |
-| `.config/k9s/` | k9s config and Tokyo Night skin. |
+| `.config/k9s/` | k9s config and Rose Pine Moon skin. |
+| `.config/nvim/` | Neovim config (kickstart-style, lazy.nvim). |
+| `.config/ghostty/` | Ghostty terminal config, Rose Pine Moon theme. |
+| `.config/herdr/` | herdr config, Rose Pine theme. |
 | `.config/bat/` | bat config. |
 | `.config/starship.toml` | Starship prompt. |
 | `.ripgreprc` | ripgrep defaults (smart-case, hidden, ignore .git). |

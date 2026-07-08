@@ -17,11 +17,11 @@ if command -v fzf >/dev/null 2>&1; then
       source /opt/homebrew/opt/fzf/shell/completion.zsh
   fi
 
-  # Tokyo Night palette to match starship/helix/tmux/k9s
+  # Rose Pine Moon palette to match starship/helix/tmux/k9s
   export FZF_DEFAULT_OPTS="\
---color=bg+:#283457,bg:#16161e,spinner:#ff9e64,hl:#7aa2f7 \
---color=fg:#c0caf5,header:#7aa2f7,info:#e0af68,pointer:#ff9e64 \
---color=marker:#ff9e64,fg+:#c0caf5,prompt:#7aa2f7,hl+:#7aa2f7 \
+--color=bg+:#44415a,bg:#232136,spinner:#ea9a97,hl:#3e8fb0 \
+--color=fg:#e0def4,header:#3e8fb0,info:#f6c177,pointer:#ea9a97 \
+--color=marker:#ea9a97,fg+:#e0def4,prompt:#3e8fb0,hl+:#3e8fb0 \
 --height=40% --layout=reverse --border"
 
   # Use ripgrep for fzf's file source when available

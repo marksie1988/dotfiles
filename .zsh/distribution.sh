@@ -20,6 +20,7 @@ fi
 # make sure your font is compatible with https://github.com/lukas-w/font-logos
 case $_distro in
     *kali*)                  ICON="ﴣ";;
+    *cachyos*)               ICON="";;
     *arch*)                  ICON="";;
     *debian*)                ICON="";;
     *raspbian*)              ICON="";;
