@@ -9,7 +9,7 @@ prompt_install() {
   local cmd=$2
   local install_logic=$3
 
-  if ! command -v "$cmd" > /dev/null; then
+  if ! command -v "$cmd" >/dev/null; then
     echo -n "Do you want to install $name? (y/n) "
     read -r response
     if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then

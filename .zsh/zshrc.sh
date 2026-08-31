@@ -10,15 +10,15 @@ fi
 # Fix for arrow-key searching
 # start typing + [Up-Arrow] - fuzzy find history forward
 if [[ "${terminfo[kcuu1]}" != "" ]]; then
-	autoload -U up-line-or-beginning-search
-	zle -N up-line-or-beginning-search
-	bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
+  autoload -U up-line-or-beginning-search
+  zle -N up-line-or-beginning-search
+  bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
 fi
 # start typing + [Down-Arrow] - fuzzy find history backward
 if [[ "${terminfo[kcud1]}" != "" ]]; then
-	autoload -U down-line-or-beginning-search
-	zle -N down-line-or-beginning-search
-	bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
+  autoload -U down-line-or-beginning-search
+  zle -N down-line-or-beginning-search
+  bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
 fi
 
 # History
@@ -29,7 +29,7 @@ HISTFILE=~/.cache/zsh/history
 HISTSIZE=100000
 SAVEHIST=100000
 setopt inc_append_history # To save every command before it is executed
-setopt share_history # setopt inc_append_history
+setopt share_history      # setopt inc_append_history
 
 # Default Editor
 # ---
@@ -51,7 +51,6 @@ source ~/.zsh/aliases.sh
 # ---
 #
 source ~/.zsh/functions.sh
-
 
 # Distribution Icon
 # ---
@@ -88,6 +87,6 @@ eval "$(starship init zsh)"
 # unless nothing initialises after it, so it must genuinely run last.
 
 # Auto-attach tmux only when opted in via TMUX_AUTOSTART=1
-if [[ "$TMUX_AUTOSTART" == "1" ]] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+if [[ "$TMUX_AUTOSTART" == "1" ]] && command -v tmux &>/dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   tmux attach || exec tmux
 fi

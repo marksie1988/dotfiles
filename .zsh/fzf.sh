@@ -8,12 +8,12 @@ if command -v fzf >/dev/null 2>&1; then
   elif [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
     # Debian/Ubuntu apt package path (older fzf)
     source /usr/share/doc/fzf/examples/key-bindings.zsh
-    [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && \
+    [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] &&
       source /usr/share/doc/fzf/examples/completion.zsh
   elif [[ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]]; then
     # Homebrew fallback for older fzf
     source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
-    [[ -f /opt/homebrew/opt/fzf/shell/completion.zsh ]] && \
+    [[ -f /opt/homebrew/opt/fzf/shell/completion.zsh ]] &&
       source /opt/homebrew/opt/fzf/shell/completion.zsh
   fi
 

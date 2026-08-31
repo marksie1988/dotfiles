@@ -12,7 +12,7 @@ if ! tput colors &>/dev/null; then
 fi
 
 # Helper for timeouts
-time_out () { perl -e 'alarm shift; exec @ARGV' "$@"; }
+time_out() { perl -e 'alarm shift; exec @ARGV' "$@"; }
 
 # Logging function
 log() {
@@ -39,7 +39,7 @@ ARCH_TYPE=$(uname -m)
 if [[ "$OS_TYPE" == "darwin" ]]; then
   INSTALL_CMD="brew install"
   # Ensure Homebrew is installed
-  if ! command -v brew > /dev/null; then
+  if ! command -v brew >/dev/null; then
     log "INFO" "Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
@@ -47,13 +47,13 @@ elif [[ "$OS_TYPE" == "linux" ]]; then
   # Detect the distro's package manager so Arch-family (CachyOS, Manjaro, Arch),
   # Debian/Ubuntu and Fedora are all first-class. Exported so per-tool installers
   # can branch without re-detecting.
-  if command -v pacman > /dev/null; then
+  if command -v pacman >/dev/null; then
     PKG_MANAGER="pacman"
     INSTALL_CMD="sudo pacman -S --needed --noconfirm"
-  elif command -v apt > /dev/null; then
+  elif command -v apt >/dev/null; then
     PKG_MANAGER="apt"
     INSTALL_CMD="sudo apt install -y"
-  elif command -v dnf > /dev/null; then
+  elif command -v dnf >/dev/null; then
     PKG_MANAGER="dnf"
     INSTALL_CMD="sudo dnf install -y"
   else
@@ -69,7 +69,7 @@ fi
 # Function to check and install a command if it doesn't exist
 install_if_missing() {
   local pkg=$1
-  if ! command -v "$pkg" > /dev/null; then
+  if ! command -v "$pkg" >/dev/null; then
     log "INFO" "Installing $pkg..."
     $INSTALL_CMD "$pkg"
   fi
@@ -121,7 +121,7 @@ run_tool_installers() {
       install_helix
     ) &
     (
-      if ! command -v starship > /dev/null; then
+      if ! command -v starship >/dev/null; then
         starship_install
       fi
     ) &
@@ -192,9 +192,9 @@ fi
 # refresh as tools are upgraded without paying the cost on every shell launch.
 regenerate_completions() {
   mkdir -p ~/.zsh/completions
-  command -v gh >/dev/null      && gh completion -s zsh      > ~/.zsh/completions/_gh      2>/dev/null
-  command -v kubectl >/dev/null && kubectl completion zsh    > ~/.zsh/completions/_kubectl 2>/dev/null
-  command -v docker >/dev/null  && docker completion zsh     > ~/.zsh/completions/_docker  2>/dev/null
+  command -v gh >/dev/null && gh completion -s zsh >~/.zsh/completions/_gh 2>/dev/null
+  command -v kubectl >/dev/null && kubectl completion zsh >~/.zsh/completions/_kubectl 2>/dev/null
+  command -v docker >/dev/null && docker completion zsh >~/.zsh/completions/_docker 2>/dev/null
 }
 
 # Daily/Runtime checks (optimized)
@@ -221,7 +221,7 @@ if [[ "$FORCE_UPDATE" == true || ("$local_tag" != "$remote_tag" && -n "$remote_t
     log "WARN" "Updates Detected: $local_tag -> $remote_tag"
     yadm log ..@{u} --pretty=format:%Cred%aN:%Creset\ %s\ %Cgreen%cd
   fi
-  
+
   log "INFO" " Pulling Updates..."
   if yadm pull -q; then
     # Pick up any tools added in the pulled version before reloading.

@@ -13,15 +13,18 @@ install_lazygit() {
   # Linux: no reliable apt package. Pull the latest tarball from GitHub releases.
   local arch
   case "$ARCH_TYPE" in
-    x86_64)  arch="x86_64" ;;
+    x86_64) arch="x86_64" ;;
     aarch64) arch="arm64" ;;
-    armv7l)  arch="armv6" ;;
-    *)       log "ERROR" "Unsupported arch for lazygit: $ARCH_TYPE"; return 1 ;;
+    armv7l) arch="armv6" ;;
+    *)
+      log "ERROR" "Unsupported arch for lazygit: $ARCH_TYPE"
+      return 1
+      ;;
   esac
 
   local version
-  version=$(curl -sSL https://api.github.com/repos/jesseduffield/lazygit/releases/latest \
-    | jq -r '.tag_name' | sed 's/^v//')
+  version=$(curl -sSL https://api.github.com/repos/jesseduffield/lazygit/releases/latest |
+    jq -r '.tag_name' | sed 's/^v//')
   if [[ -z "$version" ]]; then
     log "ERROR" "Could not resolve lazygit version"
     return 1

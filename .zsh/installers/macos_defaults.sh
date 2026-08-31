@@ -9,7 +9,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   osascript -e 'tell application "System Preferences" to quit'
 
   # Keep-alive: update existing `sudo` time stamp until `.macos` has finished
-  while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+  while true; do
+    sudo -n true
+    sleep 60
+    kill -0 "$$" || exit
+  done 2>/dev/null &
 
   # General UI/UX
   # Set computer name (as done via System Preferences → Sharing)
@@ -264,7 +268,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     "Safari" \
     "SystemUIServer" \
     "Terminal"; do
-    killall "${app}" &> /dev/null
+    killall "${app}" &>/dev/null
   done
   echo "Done. Note that some of these changes require a logout/restart to take effect."
 fi

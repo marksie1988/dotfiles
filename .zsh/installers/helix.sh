@@ -1,7 +1,6 @@
-
 # Install helix
 install_helix() {
-  if ! command -v hx > /dev/null; then
+  if ! command -v hx >/dev/null; then
     echo "Installing helix..."
     if [[ "$OSTYPE" == "darwin"* ]]; then
       brew install helix

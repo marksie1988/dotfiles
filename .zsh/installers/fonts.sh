@@ -25,10 +25,10 @@ install_font() {
   cd /tmp || return 1
   curl -fLo "$FONT_ZIP" "$FONT_URL"
   unzip -o "$FONT_ZIP" -d font_tmp
-  
+
   echo "Installing fonts to ${FONT_DIR}..."
   cp font_tmp/*Mono* "$FONT_DIR/"
-  
+
   if [[ "$OSTYPE" != "darwin"* ]]; then
     fc-cache -f "$FONT_DIR"
   fi

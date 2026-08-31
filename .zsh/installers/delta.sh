@@ -19,15 +19,18 @@ install_delta() {
   # Fallback: fetch the latest .deb from GitHub releases for x86_64 / aarch64.
   local arch
   case "$ARCH_TYPE" in
-    x86_64)  arch="amd64" ;;
+    x86_64) arch="amd64" ;;
     aarch64) arch="arm64" ;;
-    *)       log "ERROR" "Unsupported arch for delta: $ARCH_TYPE"; return 1 ;;
+    *)
+      log "ERROR" "Unsupported arch for delta: $ARCH_TYPE"
+      return 1
+      ;;
   esac
 
   local deb_url
-  deb_url=$(curl -sSL https://api.github.com/repos/dandavison/delta/releases/latest \
-    | jq -r ".assets[] | select(.name | test(\"${arch}.*\\\\.deb$\")) | .browser_download_url" \
-    | head -n1)
+  deb_url=$(curl -sSL https://api.github.com/repos/dandavison/delta/releases/latest |
+    jq -r ".assets[] | select(.name | test(\"${arch}.*\\\\.deb$\")) | .browser_download_url" |
+    head -n1)
   if [[ -z "$deb_url" ]]; then
     log "ERROR" "Could not resolve delta .deb download URL"
     return 1

@@ -1,6 +1,6 @@
 # Install eza (modern replacement for 'ls')
 install_eza() {
-  if ! command -v eza > /dev/null; then
+  if ! command -v eza >/dev/null; then
     echo "Installing eza..."
     if [[ "$OSTYPE" == "darwin"* ]]; then
       brew install eza

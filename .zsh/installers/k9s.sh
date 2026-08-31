@@ -1,6 +1,6 @@
 # Install and configure k9s
 install_k9s() {
-  if ! command -v k9s > /dev/null; then
+  if ! command -v k9s >/dev/null; then
     log "INFO" "Installing k9s..."
     if [[ "$OS_TYPE" == "darwin" ]]; then
       brew install k9s

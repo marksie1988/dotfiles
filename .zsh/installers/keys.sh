@@ -18,7 +18,7 @@ else
 fi
 
 echo "Checking GPG keys..."
-if ! gpg --list-secret-keys > /dev/null 2>&1; then
+if ! gpg --list-secret-keys >/dev/null 2>&1; then
   echo -n "No GPG keys found. Generate one? (y/n) "
   read -r response
   if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
