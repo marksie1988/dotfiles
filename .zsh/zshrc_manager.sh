@@ -141,6 +141,10 @@ run_tool_installers() {
       install_zoxide
     ) &
     (
+      source ~/.zsh/installers/mise.sh
+      install_mise
+    ) &
+    (
       source ~/.zsh/installers/delta.sh
       install_delta
     ) &
