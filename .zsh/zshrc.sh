@@ -83,8 +83,9 @@ command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 # Load Starship
 eval "$(starship init zsh)"
 
-# zoxide must be initialised last so its hooks run after Starship's precmd
-command -v zoxide >/dev/null && eval "$(zoxide init zsh --cmd cd)"
+# NOTE: zoxide is initialised at the very end of ~/.zshrc (after the gcloud
+# completion), not here. It registers a chpwd/precmd hook and its doctor warns
+# unless nothing initialises after it, so it must genuinely run last.
 
 # Auto-attach tmux only when opted in via TMUX_AUTOSTART=1
 if [[ "$TMUX_AUTOSTART" == "1" ]] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
