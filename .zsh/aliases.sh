@@ -38,11 +38,24 @@ alias tfp="tofu plan"
 alias tfa="tofu apply"
 alias a="ansible"
 alias ap="ansible-playbook"
-alias code="open -a 'Visual Studio Code'"
+
+## use the below because mac and ubuntu do it different
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  alias code="open -a 'Visual Studio Code'"
+else 
+  if ! command -v code &> /dev/null; then
+    if [ -x /snap/bin/code ]; then
+      alias code="/snap/bin/code"
+    elif [ -x /usr/bin/code ]; then
+      alias code="/usr/bin/code"
+    fi
+  fi
+fi
+
 
 # vim / nano alias
-alias vi="hx"
-alias nano="hx"
+alias vi="nvim"
+alias nano="nvim"
 
 # ALIAS COMMANDS
 alias ls="eza --icons --group-directories-first"
