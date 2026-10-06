@@ -272,16 +272,17 @@ require('lazy').setup({
   { -- treesitter: syntax + more
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    main = 'nvim-treesitter.configs',
-    opts = {
-      ensure_installed = {
-        'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline',
-        'python', 'query', 'vim', 'vimdoc', 'yaml', 'json', 'hcl', 'go', 'nix',
-      },
-      auto_install = true,
-      highlight = { enable = true },
-      indent = { enable = true },
-    },
+    config = function()
+      require('nvim-treesitter').setup({
+        ensure_installed = {
+          'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline',
+          'python', 'query', 'vim', 'vimdoc', 'yaml', 'json', 'hcl', 'go', 'nix',
+        },
+        auto_install = true,
+        highlight = { enable = true },
+        indent = { enable = true },
+      })
+    end,
   },
 }, {
   -- Keep the lockfile in a writable dir (config dir is a read-only Nix symlink).
