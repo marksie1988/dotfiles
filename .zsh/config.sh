@@ -11,9 +11,6 @@ STARSHIP_VERSION="latest"
 # Eza Configuration
 EZA_VERSION="latest"
 
-# Helix Configuration
-HELIX_VERSION="latest"
-
 # Logging Configuration
 LOG_FILE="$HOME/.zsh/logs/setup.log"
 mkdir -p "$(dirname "$LOG_FILE")"

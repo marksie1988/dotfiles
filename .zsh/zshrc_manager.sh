@@ -117,10 +117,6 @@ run_tool_installers() {
       install_eza
     ) &
     (
-      source ~/.zsh/installers/helix.sh
-      install_helix
-    ) &
-    (
       if ! command -v starship >/dev/null; then
         starship_install
       fi

@@ -42,7 +42,6 @@ Daily runs check for upstream dotfile updates via `yadm fetch --tags` at most on
 | `.zsh/installers/` | Per-tool install scripts. Follow the `install_<tool>` function pattern. |
 | `.gitconfig` | Git config, delta diff rendering, fzf-backed aliases (`git a`, `git df`, `git find`). |
 | `.tmux.conf` | tmux config, Rose Pine Moon theme, prefix `Ctrl+t`. |
-| `.config/helix/` | Helix editor config. |
 | `.config/k9s/` | k9s config and Rose Pine Moon skin. |
 | `.config/nvim/` | Neovim config (kickstart-style, lazy.nvim). |
 | `.config/ghostty/` | Ghostty terminal config, Rose Pine Moon theme. |

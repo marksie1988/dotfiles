@@ -17,7 +17,7 @@ if command -v fzf >/dev/null 2>&1; then
       source /opt/homebrew/opt/fzf/shell/completion.zsh
   fi
 
-  # Rose Pine Moon palette to match starship/helix/tmux/k9s
+  # Rose Pine Moon palette to match starship/tmux/k9s
   export FZF_DEFAULT_OPTS="\
 --color=bg+:#44415a,bg:#232136,spinner:#ea9a97,hl:#3e8fb0 \
 --color=fg:#e0def4,header:#3e8fb0,info:#f6c177,pointer:#ea9a97 \

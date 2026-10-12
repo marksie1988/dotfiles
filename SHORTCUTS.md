@@ -34,7 +34,7 @@ This document provides a comprehensive overview of the custom shortcuts, aliases
 - `tg`: `terragrunt`
 - `a`: `ansible`
 - `ap`: `ansible-playbook`
-- `vi`, `nano`: Alias to `hx` (Helix).
+- `vi`, `nano`: Alias to `nvim` (NeoVIM).
 - `code`: Open Visual Studio Code.
 - `ls`, `ll`: Enhanced directory listing via `eza`.
 - `tree`: Tree view via `eza`.
@@ -80,9 +80,3 @@ This document provides a comprehensive overview of the custom shortcuts, aliases
 - `Prefix + Ctrl + h/j/k/l`: Resize panes.
 - `Ctrl + a`: Send prefix to a nested tmux session.
 - `Ctrl + Shift + Left/Right`: Swap and move between windows.
-
-## Helix Editor
-
-- `Del`: Delete selection.
-- `Ctrl + c`: Yank to system clipboard.
-- `Space + y`: Join and yank selections to system clipboard (Normal and Select modes).
