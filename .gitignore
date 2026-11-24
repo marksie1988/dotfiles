@@ -79,3 +79,5 @@ Pods/
 .zsh/plugins/
 .zsh/completions/
 .zsh/logs/
+
+**/.claude/settings.local.json

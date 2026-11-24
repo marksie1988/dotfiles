@@ -15,6 +15,7 @@ repos:
       - id: shfmt
         args: [-i, "2", -ci, -w]
         files: ^\.zsh/(.*\.sh|installers/.*\.sh)$
+        exclude: ^\.zsh/functions\.sh$
 
   - repo: local
     hooks:
