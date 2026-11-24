@@ -41,10 +41,19 @@ export KUBE_EDITOR=nvim
 # SSH Agent
 # ---
 #
-if [ -z "$SSH_AUTH_SOCK" ]; then
-  eval "$(ssh-agent -s)" >/dev/null
-  ssh-add ~/.ssh/id_ed25519 2>/dev/null
+# Share one agent across every shell. Multiplexer panes (herdr, tmux) do not inherit
+# SSH_AUTH_SOCK, so a per-shell agent asks for the passphrase on every new pane.
+# ssh-add -l exits 0 (keys loaded), 1 (agent running, no keys) or 2 (no agent reachable).
+ssh-add -l >/dev/null 2>&1
+if [[ $? -eq 2 ]]; then
+  export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
+  ssh-add -l >/dev/null 2>&1
+  if [[ $? -eq 2 ]]; then
+    rm -f "$SSH_AUTH_SOCK"
+    eval "$(ssh-agent -a "$SSH_AUTH_SOCK" -s)" >/dev/null
+  fi
 fi
+ssh-add -l >/dev/null 2>&1 || ssh-add ~/.ssh/id_ed25519 2>/dev/null
 
 # Key Bindings
 # ---
