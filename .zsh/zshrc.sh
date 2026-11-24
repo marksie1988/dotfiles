@@ -34,8 +34,17 @@ setopt share_history      # setopt inc_append_history
 # Default Editor
 # ---
 #
-export EDITOR=hx
-export KUBE_EDITOR=hx
+export EDITOR=nvim
+export VISUAL=nvim
+export KUBE_EDITOR=nvim
+
+# SSH Agent
+# ---
+#
+if [ -z "$SSH_AUTH_SOCK" ]; then
+  eval "$(ssh-agent -s)" >/dev/null
+  ssh-add ~/.ssh/id_ed25519 2>/dev/null
+fi
 
 # Key Bindings
 # ---
@@ -72,11 +81,10 @@ source ~/.zsh/exports.sh
 #
 [[ -f ~/.zsh/fzf.sh ]] && source ~/.zsh/fzf.sh
 
-# Shell integrations (rbenv, atuin, zoxide, direnv)
+# Shell integrations (rbenv, zoxide, direnv)
 # ---
 #
 command -v rbenv >/dev/null && eval "$(rbenv init - zsh)"
-command -v atuin >/dev/null && eval "$(atuin init zsh --disable-up-arrow)"
 command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 
 # Load Starship

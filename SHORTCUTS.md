@@ -52,7 +52,6 @@ This document provides a comprehensive overview of the custom shortcuts, aliases
 - `Ctrl + g`: Prepare a git commit (stages all, commits with buffer content or opens editor, and pushes).
 - `Ctrl + h`: Change directory to the git repository root.
 - `Up/Down Arrows`: Beginning-of-line history search.
-- `Ctrl + r`: atuin shell history search (replaces default Ctrl+r).
 - `Ctrl + t`: fzf file picker (insert a file path into the current command).
 - `Alt + c`: fzf cd-to-subdirectory.
 - `Home/End/Delete`: Standard line navigation and character deletion.

@@ -5,7 +5,7 @@ Personal development environment config, managed with [yadm](https://yadm.io/).
 ## Supported platforms
 
 - **macOS** (primary) — Homebrew for package installs.
-- **Debian / Ubuntu** — `apt` + per-tool installers for packages not in apt (atuin, lazygit, delta).
+- **Debian / Ubuntu** — `apt` + per-tool installers for packages not in apt (lazygit, delta).
 
 Other distros may work but are not regularly tested.
 

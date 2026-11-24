@@ -129,10 +129,6 @@ run_tool_installers() {
       install_k9s
     ) &
     (
-      source ~/.zsh/installers/atuin.sh
-      install_atuin
-    ) &
-    (
       source ~/.zsh/installers/zoxide.sh
       install_zoxide
     ) &

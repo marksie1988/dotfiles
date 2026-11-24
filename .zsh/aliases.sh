@@ -42,8 +42,8 @@ alias ap="ansible-playbook"
 ## use the below because mac and ubuntu do it different
 if [[ "$OSTYPE" == "darwin"* ]]; then
   alias code="open -a 'Visual Studio Code'"
-else 
-  if ! command -v code &> /dev/null; then
+else
+  if ! command -v code &>/dev/null; then
     if [ -x /snap/bin/code ]; then
       alias code="/snap/bin/code"
     elif [ -x /usr/bin/code ]; then
@@ -51,7 +51,6 @@ else
     fi
   fi
 fi
-
 
 # vim / nano alias
 alias vi="nvim"
